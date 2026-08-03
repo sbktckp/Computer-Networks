@@ -1,9 +1,18 @@
-/* 2.2 struct w/ nested struct, call-by-value vs call-by-address.
- * Run: ./2.2
- * Output: Original: 101 Aditi 8.75 | ByValue: 999 CHANGED 0.00 | ByAddr: 101 Aditi 9.10
+/*
+ * 2.2 Struct with Nested Struct, Call-by-Value vs Call-by-Address
+ * Aim: populate struct student_info (embeds struct dob), pass it by
+ *      value to one function and by address to another, and observe
+ *      which mutation survives back in main.
+ *
+ * Input  : none (student record is hardcoded)
+ * Output : Original: 101 Aditi 8.75
+ *          ByValue: 999 CHANGED 0.00
+ *          ByAddr: 101 Aditi 9.10
+ *          After: 101 Aditi 9.10
  */
 #include <stdio.h>
 #include <string.h>
+
 struct dob { int d, m, y; };
 struct student { int roll; char name[50]; float cgpa; struct dob dob; };
 
@@ -15,6 +24,7 @@ void by_addr(struct student *s) {
     s->cgpa = 9.10f;
     printf("ByAddr: %d %s %.2f\n", s->roll, s->name, s->cgpa);
 }
+
 int main(void) {
     struct student stu = {101, "Aditi", 8.75f, {14, 3, 2005}};
     printf("Original: %d %s %.2f\n", stu.roll, stu.name, stu.cgpa);
