@@ -3,19 +3,23 @@
  *
  * Aim: given struct pkt { char ch1; char ch2[2]; char ch3; }, distribute
  *      a 4-byte number across its members, print each member, then
- *      aggregate them back into the original number and confirm the match.
+ *      reaggregate them into the original number and confirm the match.
  *
- * Method: struct pkt has exactly 4 char-sized slots (ch1, ch2[0], ch2[1],
- *         ch3), which is precisely 4 bytes, the width of an int on this
- *         platform. A single byte-order-independent split with shifts and
- *         masks fills the four slots; reassembly runs the same shifts in
- *         reverse and ORs them together, so the code makes no assumption
- *         about the host's endianness even though question 2.5 studies it
- *         directly. Fields are read into unsigned char first so the shift
- *         reassembly cannot be corrupted by sign extension from a negative
- *         char value.
+ * Design notes:
+ *   - The struct's shape is fixed by the question (3 named members, one
+ *     of which is itself a 2-element array) — C has no reflection over
+ *     struct members, so filling ch1/ch2[0]/ch2[1]/ch3 is 4 direct
+ *     assignments, not something a loop could express more clearly.
+ *   - Reassembly, by contrast, is naturally a fold over 4 byte
+ *     positions, so it is written as a loop over an array of the same
+ *     4 values (taken from the struct) rather than as 4 repeated OR
+ *     expressions — this is what actually scales if the packet grew
+ *     another byte field.
+ *   - Every byte is read through unsigned char before shifting, so a
+ *     byte with its high bit set does not sign-extend and corrupt the
+ *     upper bits of the reassembled value.
  *
- * Run:    ./bin/2.4_struct_pkt_reassemble 305419896
+ * Run:    ./2.4_struct_pkt_reassemble 305419896
  * Output: Original number : 305419896 (0x12345678)
  *         pkt.ch1         = 0x78
  *         pkt.ch2[0]      = 0x56
@@ -48,11 +52,15 @@ int main(int argc, char *argv[]) {
     printf("pkt.ch2[1]      = 0x%02X\n", (unsigned char)p.ch2[1]);
     printf("pkt.ch3         = 0x%02X\n", (unsigned char)p.ch3);
 
-    unsigned int reassembled =
-          ((unsigned char)p.ch1)
-        | ((unsigned char)p.ch2[0] <<  8)
-        | ((unsigned char)p.ch2[1] << 16)
-        | ((unsigned char)p.ch3    << 24);
+    /* Fold the 4 bytes back into one value; a loop scales if the
+     * packet grows another byte field, four hand-written ORs don't. */
+    unsigned char ordered[] = {
+        (unsigned char)p.ch1, (unsigned char)p.ch2[0],
+        (unsigned char)p.ch2[1], (unsigned char)p.ch3
+    };
+    unsigned int reassembled = 0;
+    for (size_t i = 0; i < sizeof(ordered); i++)
+        reassembled |= (unsigned int)ordered[i] << (8 * i);
 
     printf("Reassembled     : %u (0x%08X)\n", reassembled, reassembled);
     printf("Match           : %s\n",

@@ -42,16 +42,45 @@ byte-swap in 2.5 is the same operation those functions perform for a
 
 | No. | File | What it does |
 |-----|------|---------------|
-| 2.1 | `2.1_swap_pointer.c` | Swap two `argv`-supplied ints via a function taking `int*` |
-| 2.2 | `2.2_struct_call_by_value_address.c` | Nested struct (`student_info` holds `dob`); one function mutates by value (invisible to caller), one by address (visible) |
-| 2.3 | `2.3_byte_extraction.c` | Reinterpret an `int`'s address as `unsigned char*`, read its 4 bytes into named variables, no loop |
-| 2.4 | `2.4_struct_pkt_reassemble.c` | Split a number across `struct pkt {char; char[2]; char}`, then reaggregate and confirm it matches |
-| 2.5 | `2.5_endianness_check.c` | Union-based endianness probe, print byte layout, byte-swap to the opposite endianness |
+| 2.1 | `2.1_swap_pointer.c` | Swap two `argv`-supplied ints via a function taking `int*`, with real input validation via `strtol` |
+| 2.2 | `2.2_struct_call_by_value_address.c` | Nested struct (`student_info` holds `dob`); one function mutates by value (invisible to caller), one by address (visible); `strncpy` with guaranteed termination |
+| 2.3 | `2.3_byte_extraction.c` | Extract every byte of an `int` in a loop over `sizeof(int)`, not hardcoded to 4 bytes |
+| 2.4 | `2.4_struct_pkt_reassemble.c` | Split a number across `struct pkt {char; char[2]; char}` by direct member assignment (the struct shape is fixed by the question), then reassemble via a loop that folds the bytes back |
+| 2.5 | `2.5_endianness_check.c` | Union-based endianness probe (one comparison, no loop needed), then a generic in-place byte-reversal loop that swaps endianness for any integer width |
+
+## Design philosophy
+
+Each program uses a loop exactly where iteration is the right model
+for the problem, and a direct expression exactly where it isn't:
+
+- **2.1**: two variables — nothing to iterate over. The engineering
+  effort goes into rejecting malformed input via `strtol`, not into
+  avoiding a loop that was never needed.
+- **2.2**: struct member count is fixed by the type definition, so
+  population and printing are direct member access. `strncpy` with an
+  explicit terminator replaces raw `strcpy` to avoid an overflow if a
+  longer name were substituted in.
+- **2.3**: "extract every byte of a value" is inherently a bounded
+  iteration over `sizeof(int)` — the loop is the natural fit here, and
+  using `sizeof` instead of a literal `4` means the code is still
+  correct if compiled on a platform with a different `int` width.
+- **2.4**: filling the struct is 4 direct assignments (C has no
+  reflection over struct members, so there's nothing to loop over
+  there), but reassembling the bytes back into a number is written as
+  a loop over an array of those same bytes — the version that actually
+  scales if the packet grew another field.
+- **2.5**: detecting endianness is a single comparison against a
+  union's first byte, so it's one line, not a loop. Reversing the byte
+  order, on the other hand, is naturally a loop that swaps from both
+  ends toward the middle, which works for any integer width rather
+  than a fixed 4-byte bitmask expression.
 
 ## Complexity
 
-All five questions operate on a single fixed-size value (an `int`, a
-struct with a handful of members). Every operation is O(1) time and
-O(1) space — there is nothing here that scales with an input size, so
-the usual complexity table is a formality: no loops, no recursion, no
-allocation, just fixed arithmetic and pointer/struct member access.
+| No. | Time | Space |
+|-----|------|-------|
+| 2.1 | O(1) | O(1) |
+| 2.2 | O(1) | O(1) |
+| 2.3 | O(sizeof(int)) = O(1) for a fixed-width int | O(sizeof(int)) |
+| 2.4 | O(1) fill, O(4) reassembly | O(1) |
+| 2.5 | O(1) detect, O(sizeof(int)/2) swap | O(1) |

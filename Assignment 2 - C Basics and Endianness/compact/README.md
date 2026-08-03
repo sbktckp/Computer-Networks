@@ -1,23 +1,21 @@
 # Compact versions
 
 Same 5 programs, shortest form that still compiles clean under
-`-Wall -Wextra -Wpedantic` and produces the same output. What was
-trimmed relative to the full version, since that's what a TA tends to
-ask about:
+`-Wall -Wextra -Wpedantic` and produces the same output, and still uses
+a loop wherever the full version does — compact means fewer comments
+and shorter names, not different algorithms. What was trimmed:
 
-- **2.1** — no `argc` error message, ternary defaults instead of an
-  early-return usage check.
-- **2.2** — `dob` field names shortened to `d, m, y`; no separate print
-  helper, each `printf` inline; the `age` struct isn't printed at all
-  (roll/name/CGPA carry the point of the question).
-- **2.3** — variable names shortened (`b0..b3`); no hex-padded `%08X`
-  header line, just the four bytes.
-- **2.4** — struct literal filled directly instead of one assignment
-  per member; reassembly is a single expression instead of a named
-  intermediate per shift.
-- **2.5** — no separate `swap_endian32`/`host_is_little_endian`
-  functions, both inlined as one expression each in `main`.
+- **2.1** — no `strtol`-based validation, `atoi` instead (still checks
+  `argc`, just not malformed numeric input).
+- **2.2** — `dob` field names shortened to `d, m, y`; no separate
+  `set_name`/`print_student` helpers, each `printf`/`strcpy` inline.
+- **2.3** — still loops over `sizeof(n)`, just without the intermediate
+  `bytes[]` array — prints straight from the pointer inside the loop.
+- **2.4** — still reassembles via a loop, just folded into the same
+  loop that prints each byte instead of two separate passes.
+- **2.5** — still uses the union probe and a full reversal loop, just
+  without the separate `reverse_bytes` function — inlined into `main`.
 
-Nothing here changes the underlying technique (pointer casts, unions,
-bit shifts) — the full version's comments explain *why* each trick
-works; this is the same code with the explanation removed.
+Nothing here trims a loop down to a hardcoded expression — the full
+version's comments explain *why* each loop bound or type choice was
+made; this is the same logic with the explanation removed.
