@@ -6,7 +6,7 @@
  *
  * Design notes:
  *   - strtol() over atoi(): atoi() has no way to report "this wasn't a
- *     number" — it silently returns 0. strtol() reports failure through
+ *     number", it silently returns 0. strtol() reports failure through
  *     endptr, so a bad argument is caught instead of misread as 0.
  *   - swap() takes int* and returns void. Returning the swapped values
  *     instead would need two return channels (a struct, or output

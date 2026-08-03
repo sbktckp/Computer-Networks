@@ -5,15 +5,15 @@
 ### Socket programming
 
 A socket is the endpoint of a two-way communication link between two
-programs on a network — one process on the local host, another
+programs on a network, one process on the local host, another
 possibly on a remote one, identified by an IP address and a port
 number. Socket programming in C is built on a small set of system
 calls: `socket()` creates the endpoint, `bind()` attaches it to an
 address, `listen()`/`accept()` set up a server to wait for and admit
 connections, `connect()` lets a client reach a listening server, and
 `send()`/`recv()` (or plain `read()`/`write()`) move bytes once the
-connection exists. Everything this assignment covers — pointers,
-structs, and especially byte layout — is the groundwork socket code
+connection exists. Everything this assignment covers, pointers,
+structs, and especially byte layout, is the groundwork socket code
 depends on: a `struct sockaddr_in` is a plain C struct passed by
 address into `bind()`/`connect()`, and any multi-byte field inside a
 network packet (port numbers, IP addresses, packet headers) has to be
@@ -27,7 +27,7 @@ in memory. Little-endian machines (x86, most of today's hardware) store
 the least significant byte at the lowest address; big-endian machines
 store the most significant byte first. A number like `0x12345678`
 therefore sits in memory as `78 56 34 12` on a little-endian host and
-`12 34 56 78` on a big-endian one — same value, different byte layout.
+`12 34 56 78` on a big-endian one: same value, different byte layout.
 
 This matters on a network because two machines with opposite
 endianness can misinterpret each other's multi-byte fields if nobody
@@ -53,7 +53,7 @@ byte-swap in 2.5 is the same operation those functions perform for a
 Each program uses a loop exactly where iteration is the right model
 for the problem, and a direct expression exactly where it isn't:
 
-- **2.1**: two variables — nothing to iterate over. The engineering
+- **2.1**: two variables, nothing to iterate over. The engineering
   effort goes into rejecting malformed input via `strtol`, not into
   avoiding a loop that was never needed.
 - **2.2**: struct member count is fixed by the type definition, so
@@ -61,13 +61,13 @@ for the problem, and a direct expression exactly where it isn't:
   explicit terminator replaces raw `strcpy` to avoid an overflow if a
   longer name were substituted in.
 - **2.3**: "extract every byte of a value" is inherently a bounded
-  iteration over `sizeof(int)` — the loop is the natural fit here, and
+  iteration over `sizeof(int)`, the loop is the natural fit here, and
   using `sizeof` instead of a literal `4` means the code is still
   correct if compiled on a platform with a different `int` width.
 - **2.4**: filling the struct is 4 direct assignments (C has no
   reflection over struct members, so there's nothing to loop over
   there), but reassembling the bytes back into a number is written as
-  a loop over an array of those same bytes — the version that actually
+  a loop over an array of those same bytes, the version that actually
   scales if the packet grew another field.
 - **2.5**: detecting endianness is a single comparison against a
   union's first byte, so it's one line, not a loop. Reversing the byte

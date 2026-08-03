@@ -8,7 +8,7 @@
  * Design notes:
  *   - Endianness detection is a single comparison (does byte 0 hold the
  *     least-significant byte?), so it stays a one-line check via a
- *     union, not a loop — there's nothing to iterate over.
+ *     union, not a loop, there's nothing to iterate over.
  *   - Printing and swapping bytes, on the other hand, are naturally
  *     iteration over sizeof(int) byte positions. The swap is written
  *     as a loop that reverses byte order for any width, which is both

@@ -8,7 +8,7 @@
  * Design notes:
  *   - modify_by_value() receives a full copy of the struct on its own
  *     stack frame. Every write inside it dies when the function
- *     returns — main's copy is untouched. modify_by_address() receives
+ *     returns; main's copy is untouched. modify_by_address() receives
  *     a pointer, so its writes land in main's actual memory.
  *   - strncpy() with an explicit guaranteed null terminator over raw
  *     strcpy(): strcpy() will happily overflow name[50] if the source

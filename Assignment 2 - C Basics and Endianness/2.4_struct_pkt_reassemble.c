@@ -7,13 +7,13 @@
  *
  * Design notes:
  *   - The struct's shape is fixed by the question (3 named members, one
- *     of which is itself a 2-element array) — C has no reflection over
+ *     of which is itself a 2-element array). C has no reflection over
  *     struct members, so filling ch1/ch2[0]/ch2[1]/ch3 is 4 direct
  *     assignments, not something a loop could express more clearly.
  *   - Reassembly, by contrast, is naturally a fold over 4 byte
  *     positions, so it is written as a loop over an array of the same
  *     4 values (taken from the struct) rather than as 4 repeated OR
- *     expressions — this is what actually scales if the packet grew
+ *     expressions, this is what actually scales if the packet grew
  *     another byte field.
  *   - Every byte is read through unsigned char before shifting, so a
  *     byte with its high bit set does not sign-extend and corrupt the

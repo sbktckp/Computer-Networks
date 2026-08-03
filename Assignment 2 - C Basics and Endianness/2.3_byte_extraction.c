@@ -9,7 +9,7 @@
  *     not just an array subscript, so the bytes are captured into a
  *     fixed-size array of char (bytes[0..sizeof(int)-1]) which gives each
  *     one its own storage location, then the array is looped over to
- *     print — the loop is the natural tool here since "extract every
+ *     print, the loop is the natural tool here since "extract every
  *     byte of a value" is inherently a bounded iteration over
  *     sizeof(int), not four special cases.
  *   - sizeof(int) drives the loop bound instead of a hardcoded 4, so

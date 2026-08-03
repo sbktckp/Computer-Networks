@@ -39,7 +39,7 @@ avoiding sign extension, union-based endianness probes), not just *what*
 the code does.
 
 **Compact** versions are the shortest code that still compiles clean
-under `-Wall -Wextra -Wpedantic` and produces the same output — fixed
+under `-Wall -Wextra -Wpedantic` and produces the same output, fixed
 arrays, no loops where a direct unrolled expression does the job, no
 error handling beyond argument count. Each compact file's header comment
 carries a real sample run so the program and its output can go straight
