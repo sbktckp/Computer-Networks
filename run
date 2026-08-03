@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# ./run              list every buildable program
+# ./run 2.1          run the full version of question 2.1
+# ./run compact/2.1  run the compact version of question 2.1
+# ./run 2.3 999      extra words are forwarded as argv to the program
+set -euo pipefail
+cd "$(dirname "$0")"
+
+if [ $# -eq 0 ]; then
+    make -s all >/dev/null
+    echo "Available programs:"
+    find bin -maxdepth 2 -type f | sed 's|^bin/||' | sort
+    exit 0
+fi
+
+target="$1"; shift
+make -s all >/dev/null
+
+bin="bin/$target"
+if [ ! -x "$bin" ]; then
+    base="$(basename "$target")"
+    dir="$(dirname "$target")"
+    [ "$dir" = "." ] && dir=""
+    match=$(find "bin/$dir" -maxdepth 1 -type f -name "${base}*" 2>/dev/null | head -n1)
+    [ -n "$match" ] && bin="$match"
+fi
+
+if [ ! -x "$bin" ]; then
+    echo "No program matches '$target'. Run ./run with no arguments to list options." >&2
+    exit 1
+fi
+
+exec "$bin" "$@"

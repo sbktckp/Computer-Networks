@@ -1,27 +1,46 @@
-<h1 align="center">COMPUTER NETWORKS</h1>
-<p align="center">Weekly lab work, written up as I go through the semester.</p>
+# Computer Networks Lab
 
-<p align="center">
-  <img src="https://img.shields.io/github/last-commit/sbktckp/Computer-Networks?style=flat-square" alt="last commit" />
-  <img src="https://img.shields.io/badge/status-in%20progress-yellow?style=flat-square" />
-</p>
+Weekly codes for the Computer Networks lab. Same layout as the DAA repo:
+each week gets a folder with a full version of every program and a
+`compact/` subfolder with the shortest version that still works.
 
----
+## Running
 
-### WHAT THIS IS
+Open Codespaces on this repo. The container installs `gcc` and `make`
+before it hands you a terminal.
 
-This is where I'm keeping the code from my Computer Networks lab, week by week. It's a college course repo, not a polished library, so expect it to look like a semester in progress rather than a finished project.
+**Open a `.c` file and press Run**, the triangle at the top right of the
+editor. Compiles and runs that one file.
 
-I'll add each week's work as it happens: the exercise, the setup, and whatever the lab actually asked for, whether that's socket programming, protocol simulation, or something else on the syllabus.
+**Or use the terminal:**
 
-### HOW IT'S ORGANIZED
+```bash
+./run              # list everything
+./run 2.1          # question 2.1, full version
+./run compact/2.1  # question 2.1, compact version
+./run 2.3 999999   # extra words are forwarded as argv to the program
+```
 
-Nothing's here yet beyond this README. Once the first lab lands, the plan is to keep one folder per week or topic, so it stays easy to find a specific exercise later without digging through unrelated code.
+`make` rebuilds everything, `make clean` removes the binaries. No
+absolute paths anywhere, standard C17 only, so it behaves the same in a
+Codespace, WSL, Linux, or macOS.
 
-### WHY IT'S PUBLIC
+## Weeks
 
-Mostly so I have one place to track my own work across the semester, and so it's easy to point someone at a specific solution if they ask. If you're taking a similar course and stumble on this, feel free to look around, just don't expect a tutorial. It's my working notes, not a course.
+| Week | Folder | Topic |
+|------|--------|-------|
+| 2 | [Assignment 2 - C Basics and Endianness](<Assignment 2 - C Basics and Endianness>) | Pointers, structs, byte extraction, endianness |
 
----
+## Full vs Compact
 
-<p align="center">Smit, updated as the semester goes.</p>
+**Full** versions are commented for understanding: they explain *why*
+each trick works (call-by-value copying the whole struct, unsigned char
+avoiding sign extension, union-based endianness probes), not just *what*
+the code does.
+
+**Compact** versions are the shortest code that still compiles clean
+under `-Wall -Wextra -Wpedantic` and produces the same output — fixed
+arrays, no loops where a direct unrolled expression does the job, no
+error handling beyond argument count. Each compact file's header comment
+carries a real sample run so the program and its output can go straight
+into a record book.
