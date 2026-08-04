@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-# Compiles and runs 2.1_swap_pointer.c directly. Usage: ./run_2.1_swap_pointer [args...]
-set -euo pipefail
-dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-src="$dir/2.1_swap_pointer.c"
-bin="$(mktemp)"
-gcc -std=c17 -O2 -Wall -Wextra -Wpedantic -o "$bin" "$src"
-exec "$bin" "$@"
