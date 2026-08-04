@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Compiles and runs 2.2_struct_call_by_value_address.c directly. Usage: ./run_2.2_struct_call_by_value_address [args...]
+set -euo pipefail
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+src="$dir/2.2_struct_call_by_value_address.c"
+bin="$(mktemp)"
+gcc -std=c17 -O2 -Wall -Wextra -Wpedantic -o "$bin" "$src"
+exec "$bin" "$@"
