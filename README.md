@@ -1,9 +1,9 @@
 # Computer Networks Lab
 
-Weekly codes for the Computer Networks lab. Each week gets a folder with
-a full version of every program and a `compact/` subfolder with the
-shortest version that still works. Every program is directly
-executable in the terminal, no manual `gcc` command needed.
+Weekly codes for the Computer Networks lab. Each week gets its own
+folder with a full version of every program and a `compact/`
+subfolder with the shortest version that still works. Every program
+is directly executable in the terminal, no manual `gcc` command needed.
 
 ## Run in your Codespace terminal
 
@@ -19,10 +19,15 @@ Once the terminal is open, there are three ways to run any program:
 ```bash
 cd "Assignment 2 - C Basics and Endianness"
 ./run_2.1_swap_pointer 10 25
-./run_2.3_byte_extraction 999999
-cd compact
-./run_2.5_endianness_check 999999
+
+cd "../Day 3 - Socket Programming"
+./run_3.1_tcp_server 9090       # start this first, in its own terminal
+./run_3.2_tcp_client 127.0.0.1 9090   # then this, in a second terminal
 ```
+
+Client/server programs like Day 3 need two terminal tabs open at once,
+one running the server, one running the client against it. See that
+week's README for the exact two-terminal walkthrough.
 
 Every `run_*` script is already executable and compiles fresh each time
 it runs, so editing the `.c` file and re-running picks up the change
@@ -31,17 +36,18 @@ immediately.
 **2. Use the repo-wide `./run` helper** (works from the repo root):
 
 ```bash
-./run                # list every program in the repo
-./run 2.1             # full version of question 2.1
-./run compact/2.1     # compact version of question 2.1
-./run 2.3 999999       # extra words are forwarded as argv
+./run                # list every program in the repo, grouped by week
+./run 2.1             # Assignment 2, full version of question 2.1
+./run compact/2.1     # Assignment 2, compact version of question 2.1
+./run 3.1              # Day 3, the server
+./run 3.2 127.0.0.1 9090  # Day 3, the client, with arguments forwarded
 ```
 
-**3. Use `make`** (builds every program at once into `bin/`):
+**3. Use `make`** (builds every program in every week at once into `bin/`):
 
 ```bash
-make            # builds bin/2.x_*.c and bin/compact/2.x_*.c
-./bin/2.1_swap_pointer 10 25
+make            # builds bin/<week>/<program> for every week folder
+./bin/"Assignment 2 - C Basics and Endianness"/2.1_swap_pointer 10 25
 make clean      # removes bin/
 ```
 
@@ -49,11 +55,10 @@ make clean      # removes bin/
 at the top right. This compiles and runs just that file.
 
 If a script ever loses its executable bit (some file managers strip it
-on download), restore it with:
+on download), restore it from the repo root with:
 
 ```bash
-chmod +x run "Assignment 2 - C Basics and Endianness"/run_* \
-             "Assignment 2 - C Basics and Endianness"/compact/run_*
+find . -name 'run_*' -exec chmod +x {} \; && chmod +x run
 ```
 
 No absolute paths anywhere in the repo, and everything targets standard
@@ -65,13 +70,14 @@ native Linux, or macOS.
 | Week | Folder | Topic |
 |------|--------|-------|
 | 2 | [Assignment 2 - C Basics and Endianness](<Assignment 2 - C Basics and Endianness>) | Pointers, structs, byte extraction, endianness |
+| 3 | [Day 3 - Socket Programming](<Day 3 - Socket Programming>) | TCP sockets in C: server and client |
 
 ## Full vs Compact
 
 **Full** versions are commented for understanding: they explain *why*
-each trick works (call-by-value copying the whole struct, unsigned char
-avoiding sign extension, union-based endianness probes), not just *what*
-the code does.
+each choice works (call-by-value copying the whole struct, `SO_REUSEADDR`
+avoiding a bind failure on restart, `inet_pton` over `inet_addr`), not
+just *what* the code does.
 
 **Compact** versions are the shortest code that still compiles clean
 under `-Wall -Wextra -Wpedantic` and produces the same output, using a
