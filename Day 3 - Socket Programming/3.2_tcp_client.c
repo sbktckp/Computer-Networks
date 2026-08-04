@@ -1,27 +1,32 @@
 /*
  * 3.2 TCP Socket Client
  *
- * Aim: connect to a TCP server, send a fixed number of messages in a
- *      loop, print each reply, then close the connection.
+ * Aim: connect to a TCP server, then let the user type messages one
+ *      at a time from the keyboard, sending each and printing the
+ *      server's reply, until the user types "quit" or sends EOF.
  *
  * Design notes:
  *   - inet_pton() over inet_addr() to parse the server's IP: inet_addr()
  *     returns INADDR_NONE (a valid-looking value) on some malformed
  *     input, so failures can go unnoticed; inet_pton() returns a clean
  *     success/failure result and supports both IPv4 and IPv6.
- *   - The send loop matches the server's read loop: sending N messages
- *     and reading N replies demonstrates the connection being kept
- *     open across multiple exchanges, not just a single request/reply.
- *   - Command-line IP and port (with defaults) mean the same client
- *     binary can test a local server or one on another host without
- *     recompiling.
+ *   - fgets() reads a full line (bounded by the buffer size) instead
+ *     of scanf("%s"), which would stop at the first whitespace and
+ *     silently truncate any message with more than one word.
+ *   - The trailing newline fgets() keeps is stripped before sending,
+ *     so the server's strcmp(buffer, "quit") on the receiving end
+ *     matches cleanly instead of comparing against "quit\n".
+ *   - The loop exits on "quit" (matching the server's own exit
+ *     condition) or on fgets() returning NULL, which happens at EOF
+ *     (Ctrl+D) so the client doesn't hang if input is piped or closed.
  *
  * Run:    ./client 127.0.0.1 8080
  * Output: Connected to server 127.0.0.1:8080
- *         Sent: Hello from client! (msg 1)
- *         Server: Hello from server!
- *         Sent: Hello from client! (msg 2)
- *         Server: Hello from server!
+ *         Type messages to send. Type 'quit' to end the session.
+ *         > hi there
+ *         Server: Server received: hi there
+ *         > quit
+ *         Ending session.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,10 +34,9 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
-#define DEFAULT_IP    "127.0.0.1"
-#define DEFAULT_PORT  8080
-#define BUFFER_SIZE   1024
-#define MESSAGE_COUNT 3
+#define DEFAULT_IP   "127.0.0.1"
+#define DEFAULT_PORT 8080
+#define BUFFER_SIZE  1024
 
 int main(int argc, char *argv[]) {
     const char *server_ip = (argc >= 2) ? argv[1] : DEFAULT_IP;
@@ -62,15 +66,33 @@ int main(int argc, char *argv[]) {
     }
 
     printf("Connected to server %s:%d\n", server_ip, port);
+    printf("Type messages to send. Type 'quit' to end the session.\n");
 
+    char message[BUFFER_SIZE];
     char buffer[BUFFER_SIZE];
-    const char *message = "Hello from client!";
-    for (int msg_count = 1; msg_count <= MESSAGE_COUNT; msg_count++) {
+    for (;;) {
+        printf("> ");
+        fflush(stdout);
+
+        if (fgets(message, sizeof(message), stdin) == NULL) {
+            printf("\nInput closed, ending session.\n");
+            break;
+        }
+
+        /* Strip the trailing newline fgets() keeps, so "quit\n" still
+         * compares equal to "quit" and the sent message has no stray
+         * newline embedded in it. */
+        message[strcspn(message, "\n")] = '\0';
+
         if (send(sock, message, strlen(message), 0) < 0) {
             perror("send failed");
             break;
         }
-        printf("Sent: %s (msg %d)\n", message, msg_count);
+
+        if (strcmp(message, "quit") == 0) {
+            printf("Ending session.\n");
+            break;
+        }
 
         memset(buffer, 0, sizeof(buffer));
         ssize_t n = read(sock, buffer, sizeof(buffer) - 1);

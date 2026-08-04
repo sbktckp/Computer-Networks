@@ -1,12 +1,14 @@
 /*
  * 3.2 TCP Socket Client
- * Aim: connect to a TCP server, send 3 messages in a loop, print each
- *      reply.
+ * Aim: connect to a TCP server, send typed messages until "quit" or EOF,
+ *      printing each reply.
  *
- * Input  : ./3.2_tcp_client 127.0.0.1 9090
+ * Input  : ./3.2_tcp_client 127.0.0.1 9090   then type messages
  * Output : Connected to server 127.0.0.1:9090
- *          Sent: Hello from client! (msg 1)
- *          Server: Hello from server!
+ *          > hello
+ *          Server: Server received: hello
+ *          > quit
+ *          Ending session.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,13 +28,20 @@ int main(int argc, char **argv) {
 
     connect(sock, (struct sockaddr *)&addr, sizeof(addr));
     printf("Connected to server %s:%d\n", ip, port);
+    printf("Type messages to send. Type 'quit' to end the session.\n");
 
-    char buffer[1024];
-    for (int i = 1; i <= 3; i++) {
-        send(sock, "Hello from client!", 18, 0);
-        printf("Sent: Hello from client! (msg %d)\n", i);
+    char message[1024], buffer[1024];
+    for (;;) {
+        printf("> ");
+        fflush(stdout);
+        if (!fgets(message, sizeof(message), stdin)) { printf("\nInput closed.\n"); break; }
+        message[strcspn(message, "\n")] = '\0';
+
+        send(sock, message, strlen(message), 0);
+        if (strcmp(message, "quit") == 0) { printf("Ending session.\n"); break; }
+
         memset(buffer, 0, sizeof(buffer));
-        if (read(sock, buffer, sizeof(buffer) - 1) <= 0) break;
+        if (read(sock, buffer, sizeof(buffer) - 1) <= 0) { printf("Server closed the connection.\n"); break; }
         printf("Server: %s\n", buffer);
     }
 

@@ -16,24 +16,24 @@ Same two-terminal workflow as the full versions, one level up.
 ./run_3.2_tcp_client 127.0.0.1 9090
 ```
 
-From the repo root, `./run compact/3.1` and `./run compact/3.2` do the
-same thing.
+Type messages at the `>` prompt, one per line. Type `quit` (or press
+Ctrl+D) to end the session. From the repo root, `./run compact/3.1`
+and `./run compact/3.2` do the same thing.
 
 ## What's here
 
 Same server/client pair, shortest form that still compiles clean
 under `-Wall -Wextra -Wpedantic` and behaves the same: the server
-still loops on `read()` until the client disconnects, the client still
-sends 3 messages and prints each reply. What was trimmed:
+still loops on `read()` until `quit` or disconnect, the client still
+reads messages from stdin until `quit` or EOF. What was trimmed:
 
 - No `SO_REUSEADDR` error checking, `perror`/`exit` calls, or usage
   messages, every socket call's return value is used directly without
   a guard.
-- No `msg_count` label separated into its own variable name beyond the
-  loop counter itself.
-- Reply string length is hardcoded (`18`, the length of
-  `"Hello from server!"`) instead of computed with `strlen()`.
+- No separate `message`/`reply` variable naming beyond what the loop
+  itself needs.
 
-Nothing here changes the underlying sequence of socket calls, the full
-version's comments explain *why* each one is needed; this is the same
-logic with the explanation and error handling removed.
+Nothing here changes the underlying sequence of socket calls or the
+interactive read loop, the full version's comments explain *why* each
+choice was made; this is the same logic with the explanation and error
+handling removed.

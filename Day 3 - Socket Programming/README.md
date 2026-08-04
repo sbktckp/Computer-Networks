@@ -20,10 +20,12 @@ for a connection. Leave this terminal running.
 ./run_3.2_tcp_client 127.0.0.1 9090
 ```
 
-The client connects, sends 3 messages, prints each server reply, then
-exits. Terminal 1 will print each message it received and
-`Client disconnected.` once the client closes the connection; the
-server then exits too, since this server handles one client per run.
+The client connects and then prompts with `>` for as many messages as
+you want to type. Type a message and press Enter to send it; the
+server's reply prints right after. Keep going for as long as you like,
+the session stays open. Type `quit` (or press Ctrl+D) to end it, the
+server prints `Client requested to end the session.` and both sides
+exit cleanly.
 
 To open a second terminal in Codespaces: click the `+` in the terminal
 panel, or `Terminal -> New Terminal` from the menu.
@@ -78,11 +80,12 @@ reading a port out of a received address, which is why the server uses
 Server: `socket()` to create the endpoint, `bind()` to attach it to a
 port, `listen()` to start queuing incoming connections, `accept()` to
 pull one off the queue and get a new socket dedicated to that client,
-then `read()`/`send()` in a loop until the client disconnects.
+then `read()`/`send()` in a loop for as long as the client keeps
+sending messages.
 
 Client: `socket()`, then `connect()` to reach the server (this performs
-the TCP three-way handshake), then `send()`/`read()` for as many
-exchanges as needed.
+the TCP three-way handshake), then `send()`/`read()` once per message
+the user types.
 
 `inet_pton()` converts a human-readable IP string ("127.0.0.1") into
 the binary form the struct needs; `inet_ntop()` does the reverse, used
@@ -92,8 +95,8 @@ here so the server can print the connecting client's IP as text.
 
 | No. | File | What it does |
 |-----|------|---------------|
-| 3.1 | `3.1_tcp_server.c` | Accepts one TCP client, loops reading and echoing messages until the client disconnects |
-| 3.2 | `3.2_tcp_client.c` | Connects to a TCP server, sends 3 messages in a loop, prints each reply |
+| 3.1 | `3.1_tcp_server.c` | Accepts one TCP client, exchanges messages with it until the client sends `quit` or disconnects |
+| 3.2 | `3.2_tcp_client.c` | Connects to a TCP server, reads messages from the keyboard and sends each one, until `quit` or EOF (Ctrl+D) |
 
 ## Design notes
 
@@ -101,11 +104,18 @@ here so the server can print the connecting client's IP as text.
   it, restarting the server right after stopping it fails with
   "Address already in use", because the OS holds the port in
   `TIME_WAIT` for a short period after close.
-- **The server loops on `read()`** instead of handling a single
-  message. A TCP connection is a stream, not a single request/reply,
-  so a real server keeps serving the same client until `read()` returns
-  0 (clean disconnect) or a negative value (error), which is exactly
-  the condition this loop checks.
+- **The session is driven by the client's input, not a fixed count.**
+  The server loops on `read()` and the client loops on `fgets()` from
+  stdin, so a conversation can be one message or a hundred; either side
+  ending it (client typing `quit`, or the client sending EOF) stops the
+  loop cleanly on both ends.
+- **`fgets()` over `scanf("%s")`** in the client: `scanf("%s")` stops
+  at the first whitespace, so a multi-word message would be silently
+  truncated. `fgets()` reads the whole line up to the buffer size.
+- **The trailing newline `fgets()` keeps is stripped** with
+  `strcspn(message, "\n")` before sending, so the server's
+  `strcmp(buffer, "quit")` check matches "quit" exactly rather than
+  failing to match "quit\n".
 - **`inet_pton()` over `inet_addr()`** in the client: `inet_addr()`
   returns `INADDR_NONE`, itself a valid bit pattern, on some malformed
   input, so a parsing failure can silently look like a valid address.

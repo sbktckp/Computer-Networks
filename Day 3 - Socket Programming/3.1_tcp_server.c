@@ -2,8 +2,8 @@
  * 3.1 TCP Socket Server
  *
  * Aim: create a TCP server that accepts one client connection, then
- *      loops reading messages and echoing a reply until the client
- *      closes the connection.
+ *      exchanges messages with it for as long as the client keeps
+ *      sending them, until the client disconnects or sends "quit".
  *
  * Design notes:
  *   - socket() -> bind() -> listen() -> accept() is the fixed TCP
@@ -14,18 +14,18 @@
  *     the same port immediately; without it, a recently closed socket
  *     leaves the port in TIME_WAIT and the next bind() fails.
  *   - The read/reply loop keeps going until read() returns 0 (client
- *     closed cleanly) or a negative value (error). A single
- *     request/reply exchange would not demonstrate a real server,
- *     which serves a client for as long as the connection stays open.
+ *     closed cleanly), a negative value (error), or the client sends
+ *     the literal string "quit", so the session length is driven by
+ *     the client typing messages, not by a fixed message count.
  *   - inet_ntop() recovers the client's IP as a string for logging;
  *     the address arrives from accept() only in binary form.
  *
  * Run:    ./server 8080
  * Output: Server listening on port 8080...
  *         Connected to client: IP = 127.0.0.1, Port = <ephemeral>
- *         Client: Hello from client! (msg 1)
- *         Client: Hello from client! (msg 2)
- *         Client disconnected.
+ *         Client: hi there
+ *         Client: quit
+ *         Client requested to end the session.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -87,10 +87,9 @@ int main(int argc, char *argv[]) {
     printf("Connected to client: IP = %s, Port = %d\n",
            client_ip, ntohs(client_addr.sin_port));
 
-    /* Serve this client until it disconnects, not just one message. */
+    /* Keep exchanging messages for as long as the client sends them. */
     char buffer[BUFFER_SIZE];
-    const char *reply = "Hello from server!";
-    for (int msg_count = 1; ; msg_count++) {
+    for (;;) {
         memset(buffer, 0, sizeof(buffer));
         ssize_t n = read(client_fd, buffer, sizeof(buffer) - 1);
         if (n < 0) {
@@ -102,8 +101,15 @@ int main(int argc, char *argv[]) {
             break;
         }
 
-        printf("Client: %s (msg %d)\n", buffer, msg_count);
+        printf("Client: %s\n", buffer);
 
+        if (strcmp(buffer, "quit") == 0) {
+            printf("Client requested to end the session.\n");
+            break;
+        }
+
+        char reply[BUFFER_SIZE];
+        snprintf(reply, sizeof(reply), "Server received: %s", buffer);
         if (send(client_fd, reply, strlen(reply), 0) < 0) {
             perror("send failed");
             break;

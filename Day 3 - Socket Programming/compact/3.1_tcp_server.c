@@ -1,13 +1,14 @@
 /*
  * 3.1 TCP Socket Server
- * Aim: accept one TCP client, loop reading and echoing messages until
- *      the client disconnects.
+ * Aim: accept one TCP client, exchange messages until the client sends
+ *      "quit" or disconnects.
  *
  * Input  : ./3.1_tcp_server 9090
  * Output : Server listening on port 9090...
  *          Connected to client: IP = 127.0.0.1, Port = 55728
- *          Client: Hello from client! (msg 1)
- *          Client disconnected.
+ *          Client: hello
+ *          Client: quit
+ *          Client requested to end the session.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,13 +40,15 @@ int main(int argc, char **argv) {
     inet_ntop(AF_INET, &client_addr.sin_addr, client_ip, sizeof(client_ip));
     printf("Connected to client: IP = %s, Port = %d\n", client_ip, ntohs(client_addr.sin_port));
 
-    char buffer[1024];
-    for (int i = 1; ; i++) {
+    char buffer[1024], reply[1024];
+    for (;;) {
         memset(buffer, 0, sizeof(buffer));
         ssize_t n = read(client_fd, buffer, sizeof(buffer) - 1);
         if (n <= 0) { printf("Client disconnected.\n"); break; }
-        printf("Client: %s (msg %d)\n", buffer, i);
-        send(client_fd, "Hello from server!", 18, 0);
+        printf("Client: %s\n", buffer);
+        if (strcmp(buffer, "quit") == 0) { printf("Client requested to end the session.\n"); break; }
+        snprintf(reply, sizeof(reply), "Server received: %s", buffer);
+        send(client_fd, reply, strlen(reply), 0);
     }
 
     close(client_fd);
