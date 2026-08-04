@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Compiles and runs 4.1_basic_connection_client.c directly. Usage: ./run_4.1_basic_connection_client [args...]
+set -euo pipefail
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+src="$dir/4.1_basic_connection_client.c"
+bin="$(mktemp)"
+gcc -std=c17 -O2 -Wall -Wextra -Wpedantic -o "$bin" "$src"
+exec "$bin" "$@"

@@ -17,17 +17,21 @@ Once the terminal is open, there are three ways to run any program:
 **1. Run a program directly** (fastest, one command per question):
 
 ```bash
-cd "Assignment 2 - C Basics and Endianness"
+cd "Day 2 - C Basics and Endianness"
 ./run_2.1_swap_pointer 10 25
 
 cd "../Day 3 - Socket Programming"
 ./run_3.1_tcp_server 9090       # start this first, in its own terminal
 ./run_3.2_tcp_client 127.0.0.1 9090   # then this, in a second terminal
+
+cd "../Day 4 - TCP Client-Server Programs"
+./run_4.4_echo_server 9090      # start this first, in its own terminal
+./run_4.4_echo_client 127.0.0.1 9090  # then this, in a second terminal
 ```
 
-Client/server programs like Day 3 need two terminal tabs open at once,
-one running the server, one running the client against it. See that
-week's README for the exact two-terminal walkthrough.
+Client/server programs like Day 3 and Day 4 need two terminal tabs
+open at once, one running the server, one running the client against
+it. See that week's README for the exact two-terminal walkthrough.
 
 Every `run_*` script is already executable and compiles fresh each time
 it runs, so editing the `.c` file and re-running picks up the change
@@ -36,18 +40,20 @@ immediately.
 **2. Use the repo-wide `./run` helper** (works from the repo root):
 
 ```bash
-./run                # list every program in the repo, grouped by week
-./run 2.1             # Assignment 2, full version of question 2.1
-./run compact/2.1     # Assignment 2, compact version of question 2.1
-./run 3.1              # Day 3, the server
-./run 3.2 127.0.0.1 9090  # Day 3, the client, with arguments forwarded
+./run                      # list every program in the repo, grouped by week
+./run 2.1                   # Day 2, full version of question 2.1
+./run compact/2.1           # Day 2, compact version of question 2.1
+./run 3.1                    # Day 3, the server
+./run 3.2 127.0.0.1 9090        # Day 3, the client, with arguments forwarded
+./run 4.4_echo_server            # Day 4, question 4.4's server (server/client share
+./run 4.4_echo_client            # a numeric prefix, so use the full name to pick one)
 ```
 
 **3. Use `make`** (builds every program in every week at once into `bin/`):
 
 ```bash
 make            # builds bin/<week>/<program> for every week folder
-./bin/"Assignment 2 - C Basics and Endianness"/2.1_swap_pointer 10 25
+./bin/"Day 2 - C Basics and Endianness"/2.1_swap_pointer 10 25
 make clean      # removes bin/
 ```
 
@@ -69,8 +75,9 @@ native Linux, or macOS.
 
 | Week | Folder | Topic |
 |------|--------|-------|
-| 2 | [Assignment 2 - C Basics and Endianness](<Assignment 2 - C Basics and Endianness>) | Pointers, structs, byte extraction, endianness |
-| 3 | [Day 3 - Socket Programming](<Day 3 - Socket Programming>) | TCP sockets in C: server and client |
+| 2 | [Day 2 - C Basics and Endianness](<Day 2 - C Basics and Endianness>) | Pointers, structs, byte extraction, endianness |
+| 3 | [Day 3 - Socket Programming](<Day 3 - Socket Programming>) | TCP sockets in C: server and client, interactive session |
+| 4 | [Day 4 - TCP Client-Server Programs](<Day 4 - TCP Client-Server Programs>) | Six client/server pairs: connection basics, client info, one-way messaging, echo, uppercase, reverse |
 
 ## Full vs Compact
 

@@ -70,7 +70,7 @@ type when passed in, this program does that at every call site.
 
 `sin_port` and `sin_addr` are stored in network byte order (big-endian),
 regardless of the host's own endianness, the same concept covered in
-Assignment 2. `htons()` converts a port number from host to network
+Day 2. `htons()` converts a port number from host to network
 byte order before it goes into `sin_port`; `ntohs()` converts back when
 reading a port out of a received address, which is why the server uses
 `ntohs(client_addr.sin_port)` when printing the client's port.
