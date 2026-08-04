@@ -1,0 +1,16 @@
+{
+  "name": "Computer Networks Lab",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {}
+  },
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y build-essential && chmod +x run \"Assignment 2 - C Basics and Endianness\"/run_* \"Assignment 2 - C Basics and Endianness\"/compact/run_* 2>/dev/null || true",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack"
+      ]
+    }
+  }
+}

@@ -1,5 +1,28 @@
 # Assignment 2: C Basics and Endianness
 
+## Run in your Codespace terminal
+
+From this folder, every question has its own executable wrapper:
+
+```bash
+./run_2.1_swap_pointer 10 25
+./run_2.2_struct_call_by_value_address
+./run_2.3_byte_extraction 305419896
+./run_2.4_struct_pkt_reassemble 305419896
+./run_2.5_endianness_check 305419896
+```
+
+Each wrapper compiles its matching `.c` file with
+`-std=c17 -O2 -Wall -Wextra -Wpedantic` and runs it immediately, so an
+edit to the source is picked up on the next run with no separate build
+step. For the compact versions, `cd compact` and use the same
+`run_*` names.
+
+From the repo root, `./run 2.1` (full) or `./run compact/2.1` (compact)
+does the same thing, and `make` from the root builds every program at
+once into `bin/`. See the root [README](../README.md) for all three
+methods side by side.
+
 ## Theory
 
 ### Socket programming
@@ -40,13 +63,13 @@ byte-swap in 2.5 is the same operation those functions perform for a
 
 ## Questions
 
-| No. | File | What it does |
-|-----|------|---------------|
-| 2.1 | `2.1_swap_pointer.c` | Swap two `argv`-supplied ints via a function taking `int*`, with real input validation via `strtol` |
-| 2.2 | `2.2_struct_call_by_value_address.c` | Nested struct (`student_info` holds `dob`); one function mutates by value (invisible to caller), one by address (visible); `strncpy` with guaranteed termination |
-| 2.3 | `2.3_byte_extraction.c` | Extract every byte of an `int` in a loop over `sizeof(int)`, not hardcoded to 4 bytes |
-| 2.4 | `2.4_struct_pkt_reassemble.c` | Split a number across `struct pkt {char; char[2]; char}` by direct member assignment (the struct shape is fixed by the question), then reassemble via a loop that folds the bytes back |
-| 2.5 | `2.5_endianness_check.c` | Union-based endianness probe (one comparison, no loop needed), then a generic in-place byte-reversal loop that swaps endianness for any integer width |
+| No. | File | Direct run | What it does |
+|-----|------|------------|---------------|
+| 2.1 | `2.1_swap_pointer.c` | `./run_2.1_swap_pointer 10 25` | Swap two `argv`-supplied ints via a function taking `int*`, with real input validation via `strtol` |
+| 2.2 | `2.2_struct_call_by_value_address.c` | `./run_2.2_struct_call_by_value_address` | Nested struct (`student_info` holds `dob`); one function mutates by value (invisible to caller), one by address (visible); `strncpy` with guaranteed termination |
+| 2.3 | `2.3_byte_extraction.c` | `./run_2.3_byte_extraction 305419896` | Extract every byte of an `int` in a loop over `sizeof(int)`, not hardcoded to 4 bytes |
+| 2.4 | `2.4_struct_pkt_reassemble.c` | `./run_2.4_struct_pkt_reassemble 305419896` | Split a number across `struct pkt {char; char[2]; char}` by direct member assignment (the struct shape is fixed by the question), then reassemble via a loop that folds the bytes back |
+| 2.5 | `2.5_endianness_check.c` | `./run_2.5_endianness_check 305419896` | Union-based endianness probe (one comparison, no loop needed), then a generic in-place byte-reversal loop that swaps endianness for any integer width |
 
 ## Design philosophy
 
