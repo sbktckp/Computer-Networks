@@ -2,44 +2,172 @@
 
 ## Run in your Codespace terminal
 
-Every question is a client/server pair, so each needs **two terminal
-tabs**: start that question's server first, then run its client
-against it.
+Every question is a client and server pair, so each needs **two terminal
+tabs**: start that question's server first, then run its client against
+it. To open a second tab, click the `+` in the terminal panel, or use
+`Terminal -> New Terminal`.
 
-**Terminal 1:**
+Each question below uses its own port, 9091 through 9096, so you can
+leave several pairs running in different tabs without collisions.
+
+### 4.1 Basic Connection
+
+Terminal 1:
 
 ```bash
-./run_4.4_echo_server 9090
+cd "Day 4 - TCP Client-Server Programs"
+./run_4.1_basic_connection_server 9091
 ```
 
-**Terminal 2, once the server prints "listening":**
+Terminal 2:
 
 ```bash
-./run_4.4_echo_client 127.0.0.1 9090
+cd "Day 4 - TCP Client-Server Programs"
+./run_4.1_basic_connection_client 127.0.0.1 9091
 ```
 
-Questions 4.3 through 4.6 are interactive: the client prompts with
-`>` for as many messages as you want to type, one per line. Type
-`quit` (or press Ctrl+D) to end the session cleanly on both sides.
-Questions 4.1 and 4.2 need no input at all, the client connects,
-prints a line, and exits immediately.
+No typing needed. The client connects, both sides print a success
+message, and the client exits on its own.
 
-To open a second terminal in Codespaces: click the `+` in the terminal
-panel, or `Terminal -> New Terminal` from the menu.
+### 4.2 Display Client Information
 
-For the compact versions, `cd compact` first and use the same
-`run_4.x_*` names. From the repo root, `./run 4.4` (server) and
-`./run 4.4` again won't disambiguate server vs client since both share
-the `4.4` prefix, so from the root use the full name instead:
-`./run 4.4_echo_server` and `./run 4.4_echo_client` (or the
-`compact/` equivalents).
+Terminal 1:
 
-Both programs in every pair take arguments:
+```bash
+cd "Day 4 - TCP Client-Server Programs"
+./run_4.2_client_info_server 9092
+```
+
+Terminal 2:
+
+```bash
+cd "Day 4 - TCP Client-Server Programs"
+./run_4.2_client_info_client 127.0.0.1 9092
+```
+
+No typing needed either. Watch the server terminal, it prints the
+client's IP and port.
+
+### 4.3 One-Way Message Transfer
+
+Terminal 1:
+
+```bash
+cd "Day 4 - TCP Client-Server Programs"
+./run_4.3_one_way_message_server 9093
+```
+
+Terminal 2:
+
+```bash
+cd "Day 4 - TCP Client-Server Programs"
+./run_4.3_one_way_message_client 127.0.0.1 9093
+```
+
+Type messages at the `>` prompt, one per line. The server displays them
+and never replies, which is the point of the question. Type `quit` to
+end.
+
+### 4.4 Echo Server
+
+Terminal 1:
+
+```bash
+cd "Day 4 - TCP Client-Server Programs"
+./run_4.4_echo_server 9094
+```
+
+Terminal 2:
+
+```bash
+cd "Day 4 - TCP Client-Server Programs"
+./run_4.4_echo_client 127.0.0.1 9094
+```
+
+Type a message and it comes straight back unchanged. `quit` to end.
+
+### 4.5 Uppercase Conversion
+
+Terminal 1:
+
+```bash
+cd "Day 4 - TCP Client-Server Programs"
+./run_4.5_uppercase_server 9095
+```
+
+Terminal 2:
+
+```bash
+cd "Day 4 - TCP Client-Server Programs"
+./run_4.5_uppercase_client 127.0.0.1 9095
+```
+
+Type `hello world` and `HELLO WORLD` comes back. `quit` to end.
+
+### 4.6 Reverse String
+
+Terminal 1:
+
+```bash
+cd "Day 4 - TCP Client-Server Programs"
+./run_4.6_reverse_string_server 9096
+```
+
+Terminal 2:
+
+```bash
+cd "Day 4 - TCP Client-Server Programs"
+./run_4.6_reverse_string_client 127.0.0.1 9096
+```
+
+Type `hello` and `olleh` comes back. `quit` to end.
+
+### The compact versions
+
+Same names, one folder deeper:
+
+```bash
+cd "Day 4 - TCP Client-Server Programs/compact"
+./run_4.4_echo_server 9094
+```
+
+```bash
+cd "Day 4 - TCP Client-Server Programs/compact"
+./run_4.4_echo_client 127.0.0.1 9094
+```
+
+### From the repo root instead
+
+Server and client share a number, so give the full name rather than
+just `4.4`:
+
+```bash
+./run 4.4_echo_server 9094
+./run 4.4_echo_client 127.0.0.1 9094
+```
+
+### If you get permission denied
+
+The executable bit does not survive a fresh clone, so set it once:
+
+```bash
+cd /workspaces/Computer-Networks
+find . -name 'run_*' -exec chmod +x {} \;
+chmod +x run build.sh
+```
+
+### If the port is already in use
+
+Pick a different number. Every program takes the port as an argument:
 
 ```bash
 ./run_4.X_..._server <port>              # default: 8080
 ./run_4.X_..._client <server_ip> <port>  # defaults: 127.0.0.1 8080
 ```
+
+Also worth knowing in Codespaces: the editor auto-forwards HTTP traffic
+to open ports, which can inject garbage into a raw TCP server. If output
+looks like a stray HTTP request, move to a fresh port number.
 
 ## Questions
 
