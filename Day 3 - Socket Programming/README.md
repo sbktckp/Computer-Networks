@@ -2,40 +2,75 @@
 
 ## Run in your Codespace terminal
 
-TCP needs a server listening before a client can connect, so this
-needs **two terminal tabs** open at the same time in your Codespace.
+TCP needs a server listening before a client can connect, so this needs
+**two terminal tabs** open at the same time. To open a second one, click
+the `+` in the terminal panel, or use `Terminal -> New Terminal`.
 
-**Terminal 1, start the server first:**
+### 3.1 TCP server, run this first
+
+Terminal 1:
 
 ```bash
+cd "Day 3 - Socket Programming"
 ./run_3.1_tcp_server 9090
 ```
 
 It prints `Server listening on port 9090...` and then blocks, waiting
 for a connection. Leave this terminal running.
 
-**Terminal 2, run the client against it:**
+### 3.2 TCP client, run this second
+
+Terminal 2:
 
 ```bash
+cd "Day 3 - Socket Programming"
 ./run_3.2_tcp_client 127.0.0.1 9090
 ```
 
-The client connects and then prompts with `>` for as many messages as
-you want to type. Type a message and press Enter to send it; the
-server's reply prints right after. Keep going for as long as you like,
-the session stays open. Type `quit` (or press Ctrl+D) to end it, the
-server prints `Client requested to end the session.` and both sides
-exit cleanly.
+The client connects and prompts with `>` for as many messages as you
+want to type. Type a message, press Enter, and the server's reply prints
+right after. Type `quit` or press Ctrl+D to end the session, and both
+sides exit cleanly.
 
-To open a second terminal in Codespaces: click the `+` in the terminal
-panel, or `Terminal -> New Terminal` from the menu.
+### The compact versions
 
-For the compact versions, `cd compact` first and use the same
-`run_3.1_tcp_server` / `run_3.2_tcp_client` names. From the repo root,
-`./run 3.1` and `./run 3.2` (or `./run compact/3.1`, `./run compact/3.2`)
-do the same thing, but still need two terminals since the server blocks.
+Terminal 1:
 
-Both programs take arguments:
+```bash
+cd "Day 3 - Socket Programming/compact"
+./run_3.1_tcp_server 9090
+```
+
+Terminal 2:
+
+```bash
+cd "Day 3 - Socket Programming/compact"
+./run_3.2_tcp_client 127.0.0.1 9090
+```
+
+### From the repo root instead
+
+```bash
+./run 3.1 9090
+./run 3.2 127.0.0.1 9090
+```
+
+Still two terminals, since the server blocks.
+
+### If you get permission denied
+
+The executable bit does not survive a fresh clone, so set it once:
+
+```bash
+cd /workspaces/Computer-Networks
+find . -name 'run_*' -exec chmod +x {} \;
+chmod +x run build.sh
+```
+
+### If the port is already in use
+
+Pick a different one. Both programs take the port as an argument, so
+9091, 9092 and so on all work, as long as the server and client agree:
 
 ```bash
 ./run_3.1_tcp_server <port>              # default: 8080
