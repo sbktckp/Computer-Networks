@@ -2,10 +2,52 @@
 
 ## Run in your Codespace terminal
 
-Every question has its own executable wrapper, no server/client
-pairing needed here, each program runs standalone:
+One block per question. Copy, paste, done. Every program here runs
+standalone, no server and client pairing needed.
+
+### 2.1 Swap two integers through a pointer
 
 ```bash
+cd "Day 2 - C Basics and Endianness"
+./run_2.1_swap_pointer 10 25
+```
+
+### 2.2 Struct call by value against call by address
+
+```bash
+cd "Day 2 - C Basics and Endianness"
+./run_2.2_struct_call_by_value_address
+```
+
+### 2.3 Byte extraction
+
+```bash
+cd "Day 2 - C Basics and Endianness"
+./run_2.3_byte_extraction 305419896
+```
+
+### 2.4 Struct pkt reassembly
+
+```bash
+cd "Day 2 - C Basics and Endianness"
+./run_2.4_struct_pkt_reassemble 305419896
+```
+
+### 2.5 Endianness check
+
+```bash
+cd "Day 2 - C Basics and Endianness"
+./run_2.5_endianness_check 305419896
+```
+
+305419896 is 0x12345678 in decimal, which is the value worth using
+because its four bytes are all different, so the byte order is obvious
+in the output.
+
+### The compact versions
+
+```bash
+cd "Day 2 - C Basics and Endianness/compact"
 ./run_2.1_swap_pointer 10 25
 ./run_2.2_struct_call_by_value_address
 ./run_2.3_byte_extraction 305419896
@@ -13,12 +55,27 @@ pairing needed here, each program runs standalone:
 ./run_2.5_endianness_check 305419896
 ```
 
+### From the repo root instead
+
+```bash
+./run 2.1 10 25
+./run compact/2.1 10 25
+```
+
+### If you get permission denied
+
+The executable bit does not survive a fresh clone, so set it once:
+
+```bash
+cd /workspaces/Computer-Networks
+find . -name 'run_*' -exec chmod +x {} \;
+chmod +x run build.sh
+```
+
 Each wrapper compiles its matching `.c` file with
 `-std=c17 -O2 -Wall -Wextra -Wpedantic` and runs it immediately, so an
 edit to the source is picked up on the next run with no separate build
-step. For the compact versions, `cd compact` and use the same
-`run_*` names. From the repo root, `./run 2.1` (full) or
-`./run compact/2.1` (compact) does the same thing.
+step.
 
 ## Theory
 
