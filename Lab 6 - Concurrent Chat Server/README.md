@@ -8,14 +8,16 @@ each client you want to connect simultaneously. To open a new tab,
 click the `+` in the terminal panel, or use `Terminal -> New Terminal`.
 
 Each block below is self-contained and copy-paste safe from any
-directory in the Codespace, it jumps to the repo root first, then into
-this folder, then restores the executable bit before running (the bit
-does not survive a fresh clone, so this is always safe to include).
+directory in the Codespace: it `cd`s straight to this folder and
+restores the executable bit before running (the bit does not survive a
+fresh clone, so this is always safe to include). These use the
+standard Codespaces path, `/workspaces/Computer-Networks`; if you
+cloned elsewhere, swap in your own path.
 
 Terminal 1:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 6 - Concurrent Chat Server"
+cd "/workspaces/Computer-Networks/Lab 6 - Concurrent Chat Server"
 chmod +x run_*
 ./run_6.1_concurrent_chat_server
 ```
@@ -23,7 +25,7 @@ chmod +x run_*
 Terminal 2:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 6 - Concurrent Chat Server"
+cd "/workspaces/Computer-Networks/Lab 6 - Concurrent Chat Server"
 chmod +x run_*
 ./run_6.1_concurrent_chat_client
 ```
@@ -31,7 +33,7 @@ chmod +x run_*
 Terminal 3 (optional, to see the concurrency):
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 6 - Concurrent Chat Server"
+cd "/workspaces/Computer-Networks/Lab 6 - Concurrent Chat Server"
 chmod +x run_*
 ./run_6.1_concurrent_chat_client
 ```
@@ -47,13 +49,13 @@ connected client keeps chatting undisturbed.
 ### The compact versions
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 6 - Concurrent Chat Server/compact"
+cd "/workspaces/Computer-Networks/Lab 6 - Concurrent Chat Server/compact"
 chmod +x run_*
 ./run_6.1_concurrent_chat_server
 ```
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 6 - Concurrent Chat Server/compact"
+cd "/workspaces/Computer-Networks/Lab 6 - Concurrent Chat Server/compact"
 chmod +x run_*
 ./run_6.1_concurrent_chat_client
 ```
