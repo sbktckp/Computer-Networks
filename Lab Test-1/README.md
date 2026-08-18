@@ -11,16 +11,18 @@ Each task uses its own port, 9191 and 9192, so both pairs can run at
 once in different tabs without colliding.
 
 Each block below is self-contained and copy-paste safe from any
-directory in the Codespace, it jumps to the repo root first, then into
-this folder, then restores the executable bit before running (the bit
-does not survive a fresh clone, so this is always safe to include).
+directory in the Codespace: it `cd`s straight to this folder and
+restores the executable bit before running (the bit does not survive a
+fresh clone, so this is always safe to include). These use the
+standard Codespaces path, `/workspaces/Computer-Networks`; if you
+cloned elsewhere, swap in your own path.
 
 ### Task-1: TCP Calculator
 
 Terminal 1:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab Test-1"
+cd "/workspaces/Computer-Networks/Lab Test-1"
 chmod +x run_*
 ./run_1.1_calculator_server 9191
 ```
@@ -28,7 +30,7 @@ chmod +x run_*
 Terminal 2:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab Test-1"
+cd "/workspaces/Computer-Networks/Lab Test-1"
 chmod +x run_*
 ./run_1.1_calculator_client 127.0.0.1 9191
 ```
@@ -43,7 +45,7 @@ sends the result back to the client. Dividing by zero returns
 Terminal 1:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab Test-1"
+cd "/workspaces/Computer-Networks/Lab Test-1"
 chmod +x run_*
 ./run_2.1_word_count_server 9192
 ```
@@ -51,7 +53,7 @@ chmod +x run_*
 Terminal 2:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab Test-1"
+cd "/workspaces/Computer-Networks/Lab Test-1"
 chmod +x run_*
 ./run_2.1_word_count_client 127.0.0.1 9192
 ```
@@ -63,25 +65,25 @@ count back to the client.
 ### The compact versions
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab Test-1/compact"
+cd "/workspaces/Computer-Networks/Lab Test-1/compact"
 chmod +x run_*
 ./run_1.1_calculator_server 9191
 ```
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab Test-1/compact"
+cd "/workspaces/Computer-Networks/Lab Test-1/compact"
 chmod +x run_*
 ./run_1.1_calculator_client 127.0.0.1 9191
 ```
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab Test-1/compact"
+cd "/workspaces/Computer-Networks/Lab Test-1/compact"
 chmod +x run_*
 ./run_2.1_word_count_server 9192
 ```
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab Test-1/compact"
+cd "/workspaces/Computer-Networks/Lab Test-1/compact"
 chmod +x run_*
 ./run_2.1_word_count_client 127.0.0.1 9192
 ```
