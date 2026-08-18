@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Compiles and runs 2.5_endianness_check.c directly. Usage: ./run_2.5_endianness_check [args...]
+set -euo pipefail
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+src="$dir/2.5_endianness_check.c"
+bin="$(mktemp)"
+gcc -std=c17 -O2 -Wall -Wextra -Wpedantic -o "$bin" "$src"
+exec "$bin" "$@"
