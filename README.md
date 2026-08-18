@@ -27,11 +27,16 @@ cd "../Day 3 - Socket Programming"
 cd "../Day 4 - TCP Client-Server Programs"
 ./run_4.4_echo_server 9090      # start this first, in its own terminal
 ./run_4.4_echo_client 127.0.0.1 9090  # then this, in a second terminal
+
+cd "../Lab Test-1"
+./run_1.1_calculator_server 9191      # start this first, in its own terminal
+./run_1.1_calculator_client 127.0.0.1 9191  # then this, in a second terminal
 ```
 
-Client/server programs like Day 3 and Day 4 need two terminal tabs
-open at once, one running the server, one running the client against
-it. See that week's README for the exact two-terminal walkthrough.
+Client/server programs like Day 3, Day 4, and Lab Test-1 need two
+terminal tabs open at once, one running the server, one running the
+client against it. See that week's README for the exact two-terminal
+walkthrough.
 
 Every `run_*` script is already executable and compiles fresh each time
 it runs, so editing the `.c` file and re-running picks up the change
@@ -47,6 +52,8 @@ immediately.
 ./run 3.2 127.0.0.1 9090        # Day 3, the client, with arguments forwarded
 ./run 4.4_echo_server            # Day 4, question 4.4's server (server/client share
 ./run 4.4_echo_client            # a numeric prefix, so use the full name to pick one)
+./run 1.1_calculator_server         # Lab Test-1, calculator server
+./run 1.1_calculator_client         # Lab Test-1, calculator client
 ```
 
 **3. Use `make`** (builds every program in every week at once into `bin/`):
@@ -78,6 +85,7 @@ native Linux, or macOS.
 | 2 | [Day 2 - C Basics and Endianness](<Day 2 - C Basics and Endianness>) | Pointers, structs, byte extraction, endianness |
 | 3 | [Day 3 - Socket Programming](<Day 3 - Socket Programming>) | TCP sockets in C: server and client, interactive session |
 | 4 | [Day 4 - TCP Client-Server Programs](<Day 4 - TCP Client-Server Programs>) | Six client/server pairs: connection basics, client info, one-way messaging, echo, uppercase, reverse |
+| Lab Test 1 | [Lab Test-1](<Lab Test-1>) | TCP calculator (+, -, *, /, division-by-zero handling), TCP word count |
 
 ## Full vs Compact
 
