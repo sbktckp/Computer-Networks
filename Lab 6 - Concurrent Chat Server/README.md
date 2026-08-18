@@ -7,24 +7,32 @@ with **three or more terminal tabs**: one for the server, and one for
 each client you want to connect simultaneously. To open a new tab,
 click the `+` in the terminal panel, or use `Terminal -> New Terminal`.
 
+Each block below is self-contained and copy-paste safe from any
+directory in the Codespace, it jumps to the repo root first, then into
+this folder, then restores the executable bit before running (the bit
+does not survive a fresh clone, so this is always safe to include).
+
 Terminal 1:
 
 ```bash
-cd "Lab 6 - Concurrent Chat Server"
+cd "$(git rev-parse --show-toplevel)/Lab 6 - Concurrent Chat Server"
+chmod +x run_*
 ./run_6.1_concurrent_chat_server
 ```
 
 Terminal 2:
 
 ```bash
-cd "Lab 6 - Concurrent Chat Server"
+cd "$(git rev-parse --show-toplevel)/Lab 6 - Concurrent Chat Server"
+chmod +x run_*
 ./run_6.1_concurrent_chat_client
 ```
 
 Terminal 3 (optional, to see the concurrency):
 
 ```bash
-cd "Lab 6 - Concurrent Chat Server"
+cd "$(git rev-parse --show-toplevel)/Lab 6 - Concurrent Chat Server"
+chmod +x run_*
 ./run_6.1_concurrent_chat_client
 ```
 
@@ -35,6 +43,20 @@ you can tell which connection a line belongs to when several are
 chatting at once. Typing `logout` in one client's terminal ends only
 that client's connection and that client's child process; every other
 connected client keeps chatting undisturbed.
+
+### The compact versions
+
+```bash
+cd "$(git rev-parse --show-toplevel)/Lab 6 - Concurrent Chat Server/compact"
+chmod +x run_*
+./run_6.1_concurrent_chat_server
+```
+
+```bash
+cd "$(git rev-parse --show-toplevel)/Lab 6 - Concurrent Chat Server/compact"
+chmod +x run_*
+./run_6.1_concurrent_chat_client
+```
 
 ## Full vs Compact
 
