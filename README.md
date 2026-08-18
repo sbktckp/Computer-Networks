@@ -21,62 +21,62 @@ safe regardless of where your terminal currently is, and restores the
 executable bit before running (it doesn't survive a fresh clone).
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 2 - C Basics and Endianness"
+cd "/workspaces/Computer-Networks/Lab 2 - C Basics and Endianness"
 chmod +x run_*
 ./run_2.1_swap_pointer 10 25
 ```
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 3 - Socket Programming"
+cd "/workspaces/Computer-Networks/Lab 3 - Socket Programming"
 chmod +x run_*
 ./run_3.1_tcp_server 9090       # start this first, in its own terminal
 ```
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 3 - Socket Programming"
+cd "/workspaces/Computer-Networks/Lab 3 - Socket Programming"
 chmod +x run_*
 ./run_3.2_tcp_client 127.0.0.1 9090   # then this, in a second terminal
 ```
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+cd "/workspaces/Computer-Networks/Lab 4 - TCP Client-Server Programs"
 chmod +x run_*
 ./run_4.4_echo_server 9090      # start this first, in its own terminal
 ```
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+cd "/workspaces/Computer-Networks/Lab 4 - TCP Client-Server Programs"
 chmod +x run_*
 ./run_4.4_echo_client 127.0.0.1 9090  # then this, in a second terminal
 ```
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 5 - TCP Chat Application"
+cd "/workspaces/Computer-Networks/Lab 5 - TCP Chat Application"
 chmod +x run_*
 ./run_5.1_chat_server           # start this first, in its own terminal
 ```
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 5 - TCP Chat Application"
+cd "/workspaces/Computer-Networks/Lab 5 - TCP Chat Application"
 chmod +x run_*
 ./run_5.1_chat_client            # then this, in a second terminal
 ```
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 6 - Concurrent Chat Server"
+cd "/workspaces/Computer-Networks/Lab 6 - Concurrent Chat Server"
 chmod +x run_*
 ./run_6.1_concurrent_chat_server         # start this first, in its own terminal
 ```
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 6 - Concurrent Chat Server"
+cd "/workspaces/Computer-Networks/Lab 6 - Concurrent Chat Server"
 chmod +x run_*
 ./run_6.1_concurrent_chat_client          # then this, in a second (or third...) terminal
 ```
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab Test-1"
+cd "/workspaces/Computer-Networks/Lab Test-1"
 chmod +x run_*
 ./run_1.1_calculator_server 9191      # start this first, in its own terminal
 ```
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab Test-1"
+cd "/workspaces/Computer-Networks/Lab Test-1"
 chmod +x run_*
 ./run_1.1_calculator_client 127.0.0.1 9191  # then this, in a second terminal
 ```
@@ -93,7 +93,7 @@ Every `run_*` script compiles fresh each time it runs, so editing the
 **2. Use the repo-wide `./run` helper** (works from the repo root):
 
 ```bash
-cd "$(git rev-parse --show-toplevel)"
+cd /workspaces/Computer-Networks
 chmod +x run
 ./run                      # list every program in the repo, grouped by week
 ./run 2.1                   # Lab 2, full version of question 2.1
@@ -113,7 +113,7 @@ chmod +x run
 **3. Use `make`** (builds every program in every week at once into `bin/`):
 
 ```bash
-cd "$(git rev-parse --show-toplevel)"
+cd /workspaces/Computer-Networks
 make            # builds bin/<week>/<program> for every week folder
 ./bin/"Lab 2 - C Basics and Endianness"/2.1_swap_pointer 10 25
 make clean      # removes bin/
@@ -122,9 +122,12 @@ make clean      # removes bin/
 **Or click Run** in the editor: open any `.c` file, press the triangle
 at the top right. This compiles and runs just that file.
 
-No absolute paths anywhere in the repo, and everything targets standard
-C17, so all three methods behave identically in a Codespace, WSL,
-native Linux, or macOS.
+These commands assume the standard Codespaces path,
+`/workspaces/Computer-Networks`. If you cloned it elsewhere (WSL, native
+Linux, macOS), replace that path with wherever you cloned the repo, or
+just `cd` into the repo yourself first and use the relative folder name
+instead. Everything targets standard C17, so all three methods behave
+identically everywhere.
 
 ## Weeks
 
