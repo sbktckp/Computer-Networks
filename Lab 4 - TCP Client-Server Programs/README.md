@@ -8,21 +8,26 @@ it. To open a second tab, click the `+` in the terminal panel, or use
 `Terminal -> New Terminal`.
 
 Each question below uses its own port, 9091 through 9096, so you can
-leave several pairs running in different tabs without collisions.
+leave several pairs running in different tabs without collisions. Each
+block is self-contained and copy-paste safe from any directory, it
+jumps to the repo root first, then into this folder, then restores the
+executable bit before running (the bit does not survive a fresh clone).
 
 ### 4.1 Basic Connection
 
 Terminal 1:
 
 ```bash
-cd "Lab 4 - TCP Client-Server Programs"
+cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+chmod +x run_*
 ./run_4.1_basic_connection_server 9091
 ```
 
 Terminal 2:
 
 ```bash
-cd "Lab 4 - TCP Client-Server Programs"
+cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+chmod +x run_*
 ./run_4.1_basic_connection_client 127.0.0.1 9091
 ```
 
@@ -34,14 +39,16 @@ message, and the client exits on its own.
 Terminal 1:
 
 ```bash
-cd "Lab 4 - TCP Client-Server Programs"
+cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+chmod +x run_*
 ./run_4.2_client_info_server 9092
 ```
 
 Terminal 2:
 
 ```bash
-cd "Lab 4 - TCP Client-Server Programs"
+cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+chmod +x run_*
 ./run_4.2_client_info_client 127.0.0.1 9092
 ```
 
@@ -53,14 +60,16 @@ client's IP and port.
 Terminal 1:
 
 ```bash
-cd "Lab 4 - TCP Client-Server Programs"
+cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+chmod +x run_*
 ./run_4.3_one_way_message_server 9093
 ```
 
 Terminal 2:
 
 ```bash
-cd "Lab 4 - TCP Client-Server Programs"
+cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+chmod +x run_*
 ./run_4.3_one_way_message_client 127.0.0.1 9093
 ```
 
@@ -73,14 +82,16 @@ end.
 Terminal 1:
 
 ```bash
-cd "Lab 4 - TCP Client-Server Programs"
+cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+chmod +x run_*
 ./run_4.4_echo_server 9094
 ```
 
 Terminal 2:
 
 ```bash
-cd "Lab 4 - TCP Client-Server Programs"
+cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+chmod +x run_*
 ./run_4.4_echo_client 127.0.0.1 9094
 ```
 
@@ -91,14 +102,16 @@ Type a message and it comes straight back unchanged. `quit` to end.
 Terminal 1:
 
 ```bash
-cd "Lab 4 - TCP Client-Server Programs"
+cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+chmod +x run_*
 ./run_4.5_uppercase_server 9095
 ```
 
 Terminal 2:
 
 ```bash
-cd "Lab 4 - TCP Client-Server Programs"
+cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+chmod +x run_*
 ./run_4.5_uppercase_client 127.0.0.1 9095
 ```
 
@@ -109,14 +122,16 @@ Type `hello world` and `HELLO WORLD` comes back. `quit` to end.
 Terminal 1:
 
 ```bash
-cd "Lab 4 - TCP Client-Server Programs"
+cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+chmod +x run_*
 ./run_4.6_reverse_string_server 9096
 ```
 
 Terminal 2:
 
 ```bash
-cd "Lab 4 - TCP Client-Server Programs"
+cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+chmod +x run_*
 ./run_4.6_reverse_string_client 127.0.0.1 9096
 ```
 
@@ -127,12 +142,14 @@ Type `hello` and `olleh` comes back. `quit` to end.
 Same names, one folder deeper:
 
 ```bash
-cd "Lab 4 - TCP Client-Server Programs/compact"
+cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs/compact"
+chmod +x run_*
 ./run_4.4_echo_server 9094
 ```
 
 ```bash
-cd "Lab 4 - TCP Client-Server Programs/compact"
+cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs/compact"
+chmod +x run_*
 ./run_4.4_echo_client 127.0.0.1 9094
 ```
 
@@ -142,18 +159,10 @@ Server and client share a number, so give the full name rather than
 just `4.4`:
 
 ```bash
+cd "$(git rev-parse --show-toplevel)"
+chmod +x run
 ./run 4.4_echo_server 9094
 ./run 4.4_echo_client 127.0.0.1 9094
-```
-
-### If you get permission denied
-
-The executable bit does not survive a fresh clone, so set it once:
-
-```bash
-cd /workspaces/Computer-Networks
-find . -name 'run_*' -exec chmod +x {} \;
-chmod +x run build.sh
 ```
 
 ### If the port is already in use
