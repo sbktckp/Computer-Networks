@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Compiles and runs 1.1_calculator_server.c directly. Usage: ./run_1.1_calculator_server [args...]
+set -euo pipefail
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+src="$dir/1.1_calculator_server.c"
+bin="$(mktemp)"
+gcc -std=c17 -O2 -Wall -Wextra -Wpedantic -o "$bin" "$src"
+exec "$bin" "$@"
