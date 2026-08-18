@@ -10,19 +10,26 @@ open a second tab, click the `+` in the terminal panel, or use
 Each task uses its own port, 9191 and 9192, so both pairs can run at
 once in different tabs without colliding.
 
+Each block below is self-contained and copy-paste safe from any
+directory in the Codespace, it jumps to the repo root first, then into
+this folder, then restores the executable bit before running (the bit
+does not survive a fresh clone, so this is always safe to include).
+
 ### Task-1: TCP Calculator
 
 Terminal 1:
 
 ```bash
-cd "Lab Test-1"
+cd "$(git rev-parse --show-toplevel)/Lab Test-1"
+chmod +x run_*
 ./run_1.1_calculator_server 9191
 ```
 
 Terminal 2:
 
 ```bash
-cd "Lab Test-1"
+cd "$(git rev-parse --show-toplevel)/Lab Test-1"
+chmod +x run_*
 ./run_1.1_calculator_client 127.0.0.1 9191
 ```
 
@@ -36,20 +43,48 @@ sends the result back to the client. Dividing by zero returns
 Terminal 1:
 
 ```bash
-cd "Lab Test-1"
+cd "$(git rev-parse --show-toplevel)/Lab Test-1"
+chmod +x run_*
 ./run_2.1_word_count_server 9192
 ```
 
 Terminal 2:
 
 ```bash
-cd "Lab Test-1"
+cd "$(git rev-parse --show-toplevel)/Lab Test-1"
+chmod +x run_*
 ./run_2.1_word_count_client 127.0.0.1 9192
 ```
 
 Type a sentence at the prompt. The server counts the words (handling
 multiple spaces and leading/trailing spaces correctly) and sends the
 count back to the client.
+
+### The compact versions
+
+```bash
+cd "$(git rev-parse --show-toplevel)/Lab Test-1/compact"
+chmod +x run_*
+./run_1.1_calculator_server 9191
+```
+
+```bash
+cd "$(git rev-parse --show-toplevel)/Lab Test-1/compact"
+chmod +x run_*
+./run_1.1_calculator_client 127.0.0.1 9191
+```
+
+```bash
+cd "$(git rev-parse --show-toplevel)/Lab Test-1/compact"
+chmod +x run_*
+./run_2.1_word_count_server 9192
+```
+
+```bash
+cd "$(git rev-parse --show-toplevel)/Lab Test-1/compact"
+chmod +x run_*
+./run_2.1_word_count_client 127.0.0.1 9192
+```
 
 ## Full vs Compact
 
