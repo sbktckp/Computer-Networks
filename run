@@ -2,7 +2,7 @@
 # ./run                        list every buildable program, grouped by week
 # ./run 2.1                    run full version of Assignment 2, question 2.1
 # ./run compact/2.1            run compact version of Assignment 2, question 2.1
-# ./run 3.1                    run full version of Day 3, question 3.1
+# ./run 3.1                    run full version of Lab 3, question 3.1
 # ./run 2.3 999                extra words are forwarded as argv to the program
 set -euo pipefail
 cd "$(dirname "$0")"
