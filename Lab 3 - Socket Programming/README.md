@@ -7,16 +7,18 @@ TCP needs a server listening before a client can connect, so this needs
 the `+` in the terminal panel, or use `Terminal -> New Terminal`.
 
 Each block below is self-contained and copy-paste safe from any
-directory in the Codespace, it jumps to the repo root first, then into
-this folder, then restores the executable bit before running (the bit
-does not survive a fresh clone, so this is always safe to include).
+directory in the Codespace: it `cd`s straight to this folder and
+restores the executable bit before running (the bit does not survive a
+fresh clone, so this is always safe to include). These use the
+standard Codespaces path, `/workspaces/Computer-Networks`; if you
+cloned elsewhere, swap in your own path.
 
 ### 3.1 TCP server, run this first
 
 Terminal 1:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 3 - Socket Programming"
+cd "/workspaces/Computer-Networks/Lab 3 - Socket Programming"
 chmod +x run_*
 ./run_3.1_tcp_server 9090
 ```
@@ -29,7 +31,7 @@ for a connection. Leave this terminal running.
 Terminal 2:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 3 - Socket Programming"
+cd "/workspaces/Computer-Networks/Lab 3 - Socket Programming"
 chmod +x run_*
 ./run_3.2_tcp_client 127.0.0.1 9090
 ```
@@ -44,7 +46,7 @@ sides exit cleanly.
 Terminal 1:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 3 - Socket Programming/compact"
+cd "/workspaces/Computer-Networks/Lab 3 - Socket Programming/compact"
 chmod +x run_*
 ./run_3.1_tcp_server 9090
 ```
@@ -52,7 +54,7 @@ chmod +x run_*
 Terminal 2:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 3 - Socket Programming/compact"
+cd "/workspaces/Computer-Networks/Lab 3 - Socket Programming/compact"
 chmod +x run_*
 ./run_3.2_tcp_client 127.0.0.1 9090
 ```
@@ -60,7 +62,7 @@ chmod +x run_*
 ### From the repo root instead
 
 ```bash
-cd "$(git rev-parse --show-toplevel)"
+cd /workspaces/Computer-Networks
 chmod +x run
 ./run 3.1 9090
 ./run 3.2 127.0.0.1 9090
