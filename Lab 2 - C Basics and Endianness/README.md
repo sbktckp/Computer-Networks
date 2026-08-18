@@ -3,40 +3,48 @@
 ## Run in your Codespace terminal
 
 One block per question. Copy, paste, done. Every program here runs
-standalone, no server and client pairing needed.
+standalone, no server and client pairing needed. Each block jumps to
+the repo root first, so it's copy-paste safe regardless of where your
+terminal currently is, and restores the executable bit before running
+(it doesn't survive a fresh clone).
 
 ### 2.1 Swap two integers through a pointer
 
 ```bash
-cd "Lab 2 - C Basics and Endianness"
+cd "$(git rev-parse --show-toplevel)/Lab 2 - C Basics and Endianness"
+chmod +x run_*
 ./run_2.1_swap_pointer 10 25
 ```
 
 ### 2.2 Struct call by value against call by address
 
 ```bash
-cd "Lab 2 - C Basics and Endianness"
+cd "$(git rev-parse --show-toplevel)/Lab 2 - C Basics and Endianness"
+chmod +x run_*
 ./run_2.2_struct_call_by_value_address
 ```
 
 ### 2.3 Byte extraction
 
 ```bash
-cd "Lab 2 - C Basics and Endianness"
+cd "$(git rev-parse --show-toplevel)/Lab 2 - C Basics and Endianness"
+chmod +x run_*
 ./run_2.3_byte_extraction 305419896
 ```
 
 ### 2.4 Struct pkt reassembly
 
 ```bash
-cd "Lab 2 - C Basics and Endianness"
+cd "$(git rev-parse --show-toplevel)/Lab 2 - C Basics and Endianness"
+chmod +x run_*
 ./run_2.4_struct_pkt_reassemble 305419896
 ```
 
 ### 2.5 Endianness check
 
 ```bash
-cd "Lab 2 - C Basics and Endianness"
+cd "$(git rev-parse --show-toplevel)/Lab 2 - C Basics and Endianness"
+chmod +x run_*
 ./run_2.5_endianness_check 305419896
 ```
 
@@ -47,7 +55,8 @@ in the output.
 ### The compact versions
 
 ```bash
-cd "Lab 2 - C Basics and Endianness/compact"
+cd "$(git rev-parse --show-toplevel)/Lab 2 - C Basics and Endianness/compact"
+chmod +x run_*
 ./run_2.1_swap_pointer 10 25
 ./run_2.2_struct_call_by_value_address
 ./run_2.3_byte_extraction 305419896
@@ -58,18 +67,10 @@ cd "Lab 2 - C Basics and Endianness/compact"
 ### From the repo root instead
 
 ```bash
+cd "$(git rev-parse --show-toplevel)"
+chmod +x run
 ./run 2.1 10 25
 ./run compact/2.1 10 25
-```
-
-### If you get permission denied
-
-The executable bit does not survive a fresh clone, so set it once:
-
-```bash
-cd /workspaces/Computer-Networks
-find . -name 'run_*' -exec chmod +x {} \;
-chmod +x run build.sh
 ```
 
 Each wrapper compiles its matching `.c` file with
