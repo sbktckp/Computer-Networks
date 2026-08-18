@@ -3,15 +3,17 @@
 ## Run in your Codespace terminal
 
 One block per question. Copy, paste, done. Every program here runs
-standalone, no server and client pairing needed. Each block jumps to
-the repo root first, so it's copy-paste safe regardless of where your
+standalone, no server and client pairing needed. Each block `cd`s to
+the folder directly, so it's copy-paste safe regardless of where your
 terminal currently is, and restores the executable bit before running
-(it doesn't survive a fresh clone).
+(it doesn't survive a fresh clone). These use the standard Codespaces
+path, `/workspaces/Computer-Networks`; if you cloned elsewhere, swap
+in your own path.
 
 ### 2.1 Swap two integers through a pointer
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 2 - C Basics and Endianness"
+cd "/workspaces/Computer-Networks/Lab 2 - C Basics and Endianness"
 chmod +x run_*
 ./run_2.1_swap_pointer 10 25
 ```
@@ -19,7 +21,7 @@ chmod +x run_*
 ### 2.2 Struct call by value against call by address
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 2 - C Basics and Endianness"
+cd "/workspaces/Computer-Networks/Lab 2 - C Basics and Endianness"
 chmod +x run_*
 ./run_2.2_struct_call_by_value_address
 ```
@@ -27,7 +29,7 @@ chmod +x run_*
 ### 2.3 Byte extraction
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 2 - C Basics and Endianness"
+cd "/workspaces/Computer-Networks/Lab 2 - C Basics and Endianness"
 chmod +x run_*
 ./run_2.3_byte_extraction 305419896
 ```
@@ -35,7 +37,7 @@ chmod +x run_*
 ### 2.4 Struct pkt reassembly
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 2 - C Basics and Endianness"
+cd "/workspaces/Computer-Networks/Lab 2 - C Basics and Endianness"
 chmod +x run_*
 ./run_2.4_struct_pkt_reassemble 305419896
 ```
@@ -43,7 +45,7 @@ chmod +x run_*
 ### 2.5 Endianness check
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 2 - C Basics and Endianness"
+cd "/workspaces/Computer-Networks/Lab 2 - C Basics and Endianness"
 chmod +x run_*
 ./run_2.5_endianness_check 305419896
 ```
@@ -55,7 +57,7 @@ in the output.
 ### The compact versions
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 2 - C Basics and Endianness/compact"
+cd "/workspaces/Computer-Networks/Lab 2 - C Basics and Endianness/compact"
 chmod +x run_*
 ./run_2.1_swap_pointer 10 25
 ./run_2.2_struct_call_by_value_address
@@ -67,7 +69,7 @@ chmod +x run_*
 ### From the repo root instead
 
 ```bash
-cd "$(git rev-parse --show-toplevel)"
+cd /workspaces/Computer-Networks
 chmod +x run
 ./run 2.1 10 25
 ./run compact/2.1 10 25
