@@ -8,14 +8,16 @@ tab, click the `+` in the terminal panel, or use `Terminal -> New
 Terminal`.
 
 Each block below is self-contained and copy-paste safe from any
-directory in the Codespace, it jumps to the repo root first, then into
-this folder, then restores the executable bit before running (the bit
-does not survive a fresh clone, so this is always safe to include).
+directory in the Codespace: it `cd`s straight to this folder and
+restores the executable bit before running (the bit does not survive a
+fresh clone, so this is always safe to include). These use the
+standard Codespaces path, `/workspaces/Computer-Networks`; if you
+cloned elsewhere, swap in your own path.
 
 Terminal 1:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 5 - TCP Chat Application"
+cd "/workspaces/Computer-Networks/Lab 5 - TCP Chat Application"
 chmod +x run_*
 ./run_5.1_chat_server
 ```
@@ -23,7 +25,7 @@ chmod +x run_*
 Terminal 2:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 5 - TCP Chat Application"
+cd "/workspaces/Computer-Networks/Lab 5 - TCP Chat Application"
 chmod +x run_*
 ./run_5.1_chat_client
 ```
@@ -37,13 +39,13 @@ print its own "Server logged out" message before exiting.
 ### The compact versions
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 5 - TCP Chat Application/compact"
+cd "/workspaces/Computer-Networks/Lab 5 - TCP Chat Application/compact"
 chmod +x run_*
 ./run_5.1_chat_server
 ```
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 5 - TCP Chat Application/compact"
+cd "/workspaces/Computer-Networks/Lab 5 - TCP Chat Application/compact"
 chmod +x run_*
 ./run_5.1_chat_client
 ```
