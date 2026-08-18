@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Compiles and runs 2.4_struct_pkt_reassemble.c (compact version) directly. Usage: ./run_2.4_struct_pkt_reassemble [args...]
+set -euo pipefail
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+src="$dir/2.4_struct_pkt_reassemble.c"
+bin="$(mktemp)"
+gcc -std=c17 -O2 -Wall -Wextra -Wpedantic -o "$bin" "$src"
+exec "$bin" "$@"
