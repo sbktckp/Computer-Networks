@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Compiles and runs 6.1_concurrent_chat_client.c directly. Usage: ./run_6.1_concurrent_chat_client [args...]
+set -euo pipefail
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+src="$dir/6.1_concurrent_chat_client.c"
+bin="$(mktemp)"
+gcc -std=c17 -O2 -Wall -Wextra -Wpedantic -o "$bin" "$src"
+exec "$bin" "$@"
