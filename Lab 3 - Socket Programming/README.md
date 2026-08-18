@@ -6,12 +6,18 @@ TCP needs a server listening before a client can connect, so this needs
 **two terminal tabs** open at the same time. To open a second one, click
 the `+` in the terminal panel, or use `Terminal -> New Terminal`.
 
+Each block below is self-contained and copy-paste safe from any
+directory in the Codespace, it jumps to the repo root first, then into
+this folder, then restores the executable bit before running (the bit
+does not survive a fresh clone, so this is always safe to include).
+
 ### 3.1 TCP server, run this first
 
 Terminal 1:
 
 ```bash
-cd "Lab 3 - Socket Programming"
+cd "$(git rev-parse --show-toplevel)/Lab 3 - Socket Programming"
+chmod +x run_*
 ./run_3.1_tcp_server 9090
 ```
 
@@ -23,7 +29,8 @@ for a connection. Leave this terminal running.
 Terminal 2:
 
 ```bash
-cd "Lab 3 - Socket Programming"
+cd "$(git rev-parse --show-toplevel)/Lab 3 - Socket Programming"
+chmod +x run_*
 ./run_3.2_tcp_client 127.0.0.1 9090
 ```
 
@@ -37,35 +44,29 @@ sides exit cleanly.
 Terminal 1:
 
 ```bash
-cd "Lab 3 - Socket Programming/compact"
+cd "$(git rev-parse --show-toplevel)/Lab 3 - Socket Programming/compact"
+chmod +x run_*
 ./run_3.1_tcp_server 9090
 ```
 
 Terminal 2:
 
 ```bash
-cd "Lab 3 - Socket Programming/compact"
+cd "$(git rev-parse --show-toplevel)/Lab 3 - Socket Programming/compact"
+chmod +x run_*
 ./run_3.2_tcp_client 127.0.0.1 9090
 ```
 
 ### From the repo root instead
 
 ```bash
+cd "$(git rev-parse --show-toplevel)"
+chmod +x run
 ./run 3.1 9090
 ./run 3.2 127.0.0.1 9090
 ```
 
 Still two terminals, since the server blocks.
-
-### If you get permission denied
-
-The executable bit does not survive a fresh clone, so set it once:
-
-```bash
-cd /workspaces/Computer-Networks
-find . -name 'run_*' -exec chmod +x {} \;
-chmod +x run build.sh
-```
 
 ### If the port is already in use
 
