@@ -7,17 +7,24 @@ the server first, then run the client against it. To open a second
 tab, click the `+` in the terminal panel, or use `Terminal -> New
 Terminal`.
 
+Each block below is self-contained and copy-paste safe from any
+directory in the Codespace, it jumps to the repo root first, then into
+this folder, then restores the executable bit before running (the bit
+does not survive a fresh clone, so this is always safe to include).
+
 Terminal 1:
 
 ```bash
-cd "Lab 5 - TCP Chat Application"
+cd "$(git rev-parse --show-toplevel)/Lab 5 - TCP Chat Application"
+chmod +x run_*
 ./run_5.1_chat_server
 ```
 
 Terminal 2:
 
 ```bash
-cd "Lab 5 - TCP Chat Application"
+cd "$(git rev-parse --show-toplevel)/Lab 5 - TCP Chat Application"
+chmod +x run_*
 ./run_5.1_chat_client
 ```
 
@@ -26,6 +33,20 @@ types a reply, back and forth. Type `logout` on either side to end the
 chat: a client-sent `logout` ends the session immediately without a
 reply; a server-typed `logout` is sent to the client first so it can
 print its own "Server logged out" message before exiting.
+
+### The compact versions
+
+```bash
+cd "$(git rev-parse --show-toplevel)/Lab 5 - TCP Chat Application/compact"
+chmod +x run_*
+./run_5.1_chat_server
+```
+
+```bash
+cd "$(git rev-parse --show-toplevel)/Lab 5 - TCP Chat Application/compact"
+chmod +x run_*
+./run_5.1_chat_client
+```
 
 ## Full vs Compact
 
