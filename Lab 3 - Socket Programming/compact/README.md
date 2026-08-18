@@ -2,17 +2,23 @@
 
 ## Run in your Codespace terminal
 
-Same two-terminal workflow as the full versions, one level up.
+Same two-terminal workflow as the full versions, one level up. Each
+block below jumps to the repo root first, so it's copy-paste safe from
+any directory, and restores the executable bit before running.
 
 **Terminal 1:**
 
 ```bash
+cd "$(git rev-parse --show-toplevel)/Lab 3 - Socket Programming/compact"
+chmod +x run_*
 ./run_3.1_tcp_server 9090
 ```
 
 **Terminal 2:**
 
 ```bash
+cd "$(git rev-parse --show-toplevel)/Lab 3 - Socket Programming/compact"
+chmod +x run_*
 ./run_3.2_tcp_client 127.0.0.1 9090
 ```
 
