@@ -9,16 +9,18 @@ it. To open a second tab, click the `+` in the terminal panel, or use
 
 Each question below uses its own port, 9091 through 9096, so you can
 leave several pairs running in different tabs without collisions. Each
-block is self-contained and copy-paste safe from any directory, it
-jumps to the repo root first, then into this folder, then restores the
-executable bit before running (the bit does not survive a fresh clone).
+block is self-contained and copy-paste safe from any directory: it
+`cd`s straight to this folder and restores the executable bit before
+running (the bit does not survive a fresh clone). These use the
+standard Codespaces path, `/workspaces/Computer-Networks`; if you
+cloned elsewhere, swap in your own path.
 
 ### 4.1 Basic Connection
 
 Terminal 1:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+cd "/workspaces/Computer-Networks/Lab 4 - TCP Client-Server Programs"
 chmod +x run_*
 ./run_4.1_basic_connection_server 9091
 ```
@@ -26,7 +28,7 @@ chmod +x run_*
 Terminal 2:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+cd "/workspaces/Computer-Networks/Lab 4 - TCP Client-Server Programs"
 chmod +x run_*
 ./run_4.1_basic_connection_client 127.0.0.1 9091
 ```
@@ -39,7 +41,7 @@ message, and the client exits on its own.
 Terminal 1:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+cd "/workspaces/Computer-Networks/Lab 4 - TCP Client-Server Programs"
 chmod +x run_*
 ./run_4.2_client_info_server 9092
 ```
@@ -47,7 +49,7 @@ chmod +x run_*
 Terminal 2:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+cd "/workspaces/Computer-Networks/Lab 4 - TCP Client-Server Programs"
 chmod +x run_*
 ./run_4.2_client_info_client 127.0.0.1 9092
 ```
@@ -60,7 +62,7 @@ client's IP and port.
 Terminal 1:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+cd "/workspaces/Computer-Networks/Lab 4 - TCP Client-Server Programs"
 chmod +x run_*
 ./run_4.3_one_way_message_server 9093
 ```
@@ -68,7 +70,7 @@ chmod +x run_*
 Terminal 2:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+cd "/workspaces/Computer-Networks/Lab 4 - TCP Client-Server Programs"
 chmod +x run_*
 ./run_4.3_one_way_message_client 127.0.0.1 9093
 ```
@@ -82,7 +84,7 @@ end.
 Terminal 1:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+cd "/workspaces/Computer-Networks/Lab 4 - TCP Client-Server Programs"
 chmod +x run_*
 ./run_4.4_echo_server 9094
 ```
@@ -90,7 +92,7 @@ chmod +x run_*
 Terminal 2:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+cd "/workspaces/Computer-Networks/Lab 4 - TCP Client-Server Programs"
 chmod +x run_*
 ./run_4.4_echo_client 127.0.0.1 9094
 ```
@@ -102,7 +104,7 @@ Type a message and it comes straight back unchanged. `quit` to end.
 Terminal 1:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+cd "/workspaces/Computer-Networks/Lab 4 - TCP Client-Server Programs"
 chmod +x run_*
 ./run_4.5_uppercase_server 9095
 ```
@@ -110,7 +112,7 @@ chmod +x run_*
 Terminal 2:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+cd "/workspaces/Computer-Networks/Lab 4 - TCP Client-Server Programs"
 chmod +x run_*
 ./run_4.5_uppercase_client 127.0.0.1 9095
 ```
@@ -122,7 +124,7 @@ Type `hello world` and `HELLO WORLD` comes back. `quit` to end.
 Terminal 1:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+cd "/workspaces/Computer-Networks/Lab 4 - TCP Client-Server Programs"
 chmod +x run_*
 ./run_4.6_reverse_string_server 9096
 ```
@@ -130,7 +132,7 @@ chmod +x run_*
 Terminal 2:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs"
+cd "/workspaces/Computer-Networks/Lab 4 - TCP Client-Server Programs"
 chmod +x run_*
 ./run_4.6_reverse_string_client 127.0.0.1 9096
 ```
@@ -142,13 +144,13 @@ Type `hello` and `olleh` comes back. `quit` to end.
 Same names, one folder deeper:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs/compact"
+cd "/workspaces/Computer-Networks/Lab 4 - TCP Client-Server Programs/compact"
 chmod +x run_*
 ./run_4.4_echo_server 9094
 ```
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs/compact"
+cd "/workspaces/Computer-Networks/Lab 4 - TCP Client-Server Programs/compact"
 chmod +x run_*
 ./run_4.4_echo_client 127.0.0.1 9094
 ```
@@ -159,7 +161,7 @@ Server and client share a number, so give the full name rather than
 just `4.4`:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)"
+cd /workspaces/Computer-Networks
 chmod +x run
 ./run 4.4_echo_server 9094
 ./run 4.4_echo_client 127.0.0.1 9094
