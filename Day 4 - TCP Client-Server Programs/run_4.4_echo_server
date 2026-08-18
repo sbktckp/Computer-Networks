@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-# Compiles and runs 4.4_echo_server.c directly. Usage: ./run_4.4_echo_server [args...]
-set -euo pipefail
-dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-src="$dir/4.4_echo_server.c"
-bin="$(mktemp)"
-gcc -std=c17 -O2 -Wall -Wextra -Wpedantic -o "$bin" "$src"
-exec "$bin" "$@"

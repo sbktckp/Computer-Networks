@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-# Compiles and runs 3.2_tcp_client.c directly. Usage: ./run_3.2_tcp_client [args...]
-set -euo pipefail
-dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-src="$dir/3.2_tcp_client.c"
-bin="$(mktemp)"
-gcc -std=c17 -O2 -Wall -Wextra -Wpedantic -o "$bin" "$src"
-exec "$bin" "$@"
