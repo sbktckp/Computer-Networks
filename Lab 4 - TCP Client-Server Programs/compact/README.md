@@ -3,14 +3,14 @@
 ## Run in your Codespace terminal
 
 Same two-terminal, one-server-one-client-per-question workflow as the
-full versions, one level up. Each block below jumps to the repo root
-first, so it's copy-paste safe from any directory, and restores the
+full versions, one level up. Each block below `cd`s straight to this
+folder, so it's copy-paste safe from any directory, and restores the
 executable bit before running.
 
 **Terminal 1:**
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs/compact"
+cd "/workspaces/Computer-Networks/Lab 4 - TCP Client-Server Programs/compact"
 chmod +x run_*
 ./run_4.4_echo_server 9090
 ```
@@ -18,7 +18,7 @@ chmod +x run_*
 **Terminal 2:**
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/Lab 4 - TCP Client-Server Programs/compact"
+cd "/workspaces/Computer-Networks/Lab 4 - TCP Client-Server Programs/compact"
 chmod +x run_*
 ./run_4.4_echo_client 127.0.0.1 9090
 ```
