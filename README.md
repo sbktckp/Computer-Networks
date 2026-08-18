@@ -17,26 +17,35 @@ Once the terminal is open, there are three ways to run any program:
 **1. Run a program directly** (fastest, one command per question):
 
 ```bash
-cd "Day 2 - C Basics and Endianness"
+cd "Lab 2 - C Basics and Endianness"
 ./run_2.1_swap_pointer 10 25
 
-cd "../Day 3 - Socket Programming"
+cd "../Lab 3 - Socket Programming"
 ./run_3.1_tcp_server 9090       # start this first, in its own terminal
 ./run_3.2_tcp_client 127.0.0.1 9090   # then this, in a second terminal
 
-cd "../Day 4 - TCP Client-Server Programs"
+cd "../Lab 4 - TCP Client-Server Programs"
 ./run_4.4_echo_server 9090      # start this first, in its own terminal
 ./run_4.4_echo_client 127.0.0.1 9090  # then this, in a second terminal
+
+cd "../Lab 5 - TCP Chat Application"
+./run_5.1_chat_server           # start this first, in its own terminal
+./run_5.1_chat_client            # then this, in a second terminal
+
+cd "../Lab 6 - Concurrent Chat Server"
+./run_6.1_concurrent_chat_server         # start this first, in its own terminal
+./run_6.1_concurrent_chat_client          # then this, in a second (or third...) terminal
 
 cd "../Lab Test-1"
 ./run_1.1_calculator_server 9191      # start this first, in its own terminal
 ./run_1.1_calculator_client 127.0.0.1 9191  # then this, in a second terminal
 ```
 
-Client/server programs like Day 3, Day 4, and Lab Test-1 need two
-terminal tabs open at once, one running the server, one running the
-client against it. See that week's README for the exact two-terminal
-walkthrough.
+Client/server programs like Lab 3, Lab 4, Lab 5, Lab 6, and Lab Test-1
+need two terminal tabs open at once, one running the server, one
+running the client against it (Lab 6 can take three or more, to show
+several clients chatting at once). See that week's README for the
+exact walkthrough.
 
 Every `run_*` script is already executable and compiles fresh each time
 it runs, so editing the `.c` file and re-running picks up the change
@@ -46,12 +55,16 @@ immediately.
 
 ```bash
 ./run                      # list every program in the repo, grouped by week
-./run 2.1                   # Day 2, full version of question 2.1
-./run compact/2.1           # Day 2, compact version of question 2.1
-./run 3.1                    # Day 3, the server
-./run 3.2 127.0.0.1 9090        # Day 3, the client, with arguments forwarded
-./run 4.4_echo_server            # Day 4, question 4.4's server (server/client share
+./run 2.1                   # Lab 2, full version of question 2.1
+./run compact/2.1           # Lab 2, compact version of question 2.1
+./run 3.1                    # Lab 3, the server
+./run 3.2 127.0.0.1 9090        # Lab 3, the client, with arguments forwarded
+./run 4.4_echo_server            # Lab 4, question 4.4's server (server/client share
 ./run 4.4_echo_client            # a numeric prefix, so use the full name to pick one)
+./run 5.1_chat_server                # Lab 5, chat server
+./run 5.1_chat_client                # Lab 5, chat client
+./run 6.1_concurrent_chat_server         # Lab 6, concurrent server
+./run 6.1_concurrent_chat_client         # Lab 6, chat client (run several at once)
 ./run 1.1_calculator_server         # Lab Test-1, calculator server
 ./run 1.1_calculator_client         # Lab Test-1, calculator client
 ```
@@ -60,7 +73,7 @@ immediately.
 
 ```bash
 make            # builds bin/<week>/<program> for every week folder
-./bin/"Day 2 - C Basics and Endianness"/2.1_swap_pointer 10 25
+./bin/"Lab 2 - C Basics and Endianness"/2.1_swap_pointer 10 25
 make clean      # removes bin/
 ```
 
@@ -82,9 +95,11 @@ native Linux, or macOS.
 
 | Week | Folder | Topic |
 |------|--------|-------|
-| 2 | [Day 2 - C Basics and Endianness](<Day 2 - C Basics and Endianness>) | Pointers, structs, byte extraction, endianness |
-| 3 | [Day 3 - Socket Programming](<Day 3 - Socket Programming>) | TCP sockets in C: server and client, interactive session |
-| 4 | [Day 4 - TCP Client-Server Programs](<Day 4 - TCP Client-Server Programs>) | Six client/server pairs: connection basics, client info, one-way messaging, echo, uppercase, reverse |
+| 2 | [Lab 2 - C Basics and Endianness](<Lab 2 - C Basics and Endianness>) | Pointers, structs, byte extraction, endianness |
+| 3 | [Lab 3 - Socket Programming](<Lab 3 - Socket Programming>) | TCP sockets in C: server and client, interactive session |
+| 4 | [Lab 4 - TCP Client-Server Programs](<Lab 4 - TCP Client-Server Programs>) | Six client/server pairs: connection basics, client info, one-way messaging, echo, uppercase, reverse |
+| 5 | [Lab 5 - TCP Chat Application](<Lab 5 - TCP Chat Application>) | Interactive two-way TCP chat, ends on "logout" from either side |
+| 6 | [Lab 6 - Concurrent Chat Server](<Lab 6 - Concurrent Chat Server>) | fork()-based concurrent chat server: one child process per client, per-client "logout", client IP printed with each message |
 | Lab Test 1 | [Lab Test-1](<Lab Test-1>) | TCP calculator (+, -, *, /, division-by-zero handling), TCP word count |
 
 ## Full vs Compact
